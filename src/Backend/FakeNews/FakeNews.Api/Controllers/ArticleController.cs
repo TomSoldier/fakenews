@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace FakeNews.Api.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/Articles/[action]")]
     [ApiController]
-    public class ArticleController : ControllerBase
+    public class ArticlesController : ControllerBase
     {
         private readonly IArticleService articleService;
 
-        public ArticleController(IArticleService articleService)
+        public ArticlesController(IArticleService articleService)
         {
             this.articleService = articleService;
         }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FakeNews.Api.Controllers
 {
-    [Route("api/Articles/[action]")]
+    [Route("api/Articles")]
     [ApiController]
     public class ArticlesController : ControllerBase
     {

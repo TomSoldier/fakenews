@@ -37,8 +37,8 @@ namespace FakeNews.Bll.Users
                 UserName = registerUserDto.Username,
                 Email = registerUserDto.Email
             };
-            
-            await userManager.CreateAsync(user,registerUserDto.Password);
+
+            await userManager.CreateAsync(user, registerUserDto.Password);
         }
     }
 }

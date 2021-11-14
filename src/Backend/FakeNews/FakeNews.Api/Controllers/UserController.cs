@@ -27,7 +27,7 @@ namespace FakeNews.Api.Controllers
             return userService.LogUserInAsync(loginDto);
         }
 
-                [HttpPost]
+        [HttpPost]
         [Route("api/Users/register")]
         public Task Login([FromBody] RegisterUserDto registerUserDto)
         {

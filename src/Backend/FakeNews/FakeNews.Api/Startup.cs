@@ -77,7 +77,7 @@ namespace FakeNews
             services.AddSingleton(s => MapperConfig.ConfigureAutoMapper());
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<FakeNewsDbContext>().AddDefaultTokenProviders();
 
-            services.AddScoped<IArticleService,ArticleService>();
+            services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IUserService, UserService>();
 
             services.AddControllers();

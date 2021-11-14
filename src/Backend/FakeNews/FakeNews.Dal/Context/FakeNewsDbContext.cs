@@ -13,7 +13,7 @@ namespace FakeNews.Dal.Context
     {
         public DbSet<Article> Articles { get; set; }
 
-        public FakeNewsDbContext(DbContextOptions options): base(options){ }
+        public FakeNewsDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

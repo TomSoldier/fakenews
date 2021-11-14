@@ -1,6 +1,8 @@
 using FakeNews.Bll.Articles;
 using FakeNews.Bll.Mappings;
+using FakeNews.Bll.Users;
 using FakeNews.Dal.Context;
+using FakeNews.Dal.Entites;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -73,8 +75,10 @@ namespace FakeNews
 
             services.AddMvc();
             services.AddSingleton(s => MapperConfig.ConfigureAutoMapper());
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<FakeNewsDbContext>().AddDefaultTokenProviders();
 
-            services.AddScoped<IArticleService,ArticleService>();
+            services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -84,8 +88,10 @@ namespace FakeNews
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
+            logger.LogInformation("Starting application...");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

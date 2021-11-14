@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using FakeNews.Dal.Context;
-using FakeNews.Transfer;
+using FakeNews.Transfer.Articles;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

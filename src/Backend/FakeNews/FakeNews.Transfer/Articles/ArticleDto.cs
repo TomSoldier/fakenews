@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FakeNews.Transfer
+namespace FakeNews.Transfer.Articles
 {
     public class ArticleDto
     {

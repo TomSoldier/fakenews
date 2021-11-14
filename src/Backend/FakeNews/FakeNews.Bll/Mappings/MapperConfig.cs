@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FakeNews.Dal.Entites;
-using FakeNews.Transfer;
+using FakeNews.Transfer.Articles;
 using System;
 using System.Collections.Generic;
 using System.Linq;

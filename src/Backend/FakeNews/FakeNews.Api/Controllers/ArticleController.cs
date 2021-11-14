@@ -1,5 +1,6 @@
 ﻿using FakeNews.Bll.Articles;
-using FakeNews.Transfer;
+using FakeNews.Transfer.Articles;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;

@@ -1,4 +1,5 @@
-﻿using FakeNews.Transfer.Users;
+﻿using FakeNews.Transfer.Jwt;
+using FakeNews.Transfer.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace FakeNews.Bll.Users
 {
     public interface IUserService
     {
-        Task LogUserInAsync(LoginDto loginDto);
+        Task<TokenDto> LogUserInAsync(LoginDto loginDto);
         Task RegisterUserAsync(RegisterUserDto registerUserDto);
     }
 }

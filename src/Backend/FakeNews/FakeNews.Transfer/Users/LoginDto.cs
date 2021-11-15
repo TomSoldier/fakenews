@@ -13,7 +13,5 @@ namespace FakeNews.Transfer.Users
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-        [Required]
-        public bool Remember { get; set; }
     }
 }

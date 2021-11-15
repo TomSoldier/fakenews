@@ -1,4 +1,5 @@
 ﻿using FakeNews.Bll.Users;
+using FakeNews.Transfer.Jwt;
 using FakeNews.Transfer.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ namespace FakeNews.Api.Controllers
 
         [HttpPost]
         [Route("api/Users/login")]
-        public Task Login([FromBody] LoginDto loginDto)
+        public Task<TokenDto> Login([FromBody] LoginDto loginDto)
         {
             return userService.LogUserInAsync(loginDto);
         }

@@ -15,4 +15,8 @@
     <ProjectReference Include="..\FakeNews.Transfer\FakeNews.Transfer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Categories\" />
+  </ItemGroup>
+
 </Project>

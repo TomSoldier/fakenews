@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace FakeNews.Dal.Entites
 {
-    public class User: IdentityUser
+    public class Category
     {
-        public User()
+        public Category()
         {
             Articles = new List<Article>();
         }
 
-        public virtual ICollection<Article> Articles { get; } 
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public virtual ICollection<Article> Articles { get;}
     }
 }

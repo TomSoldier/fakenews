@@ -14,13 +14,6 @@ interface IThemeContext {
 	children?: ReactElement;
 }
 
-export const ThemeContext = React.createContext({
-	theme: 'light',
-	changeTheme: (themeValue: Theme) => {
-		applyTheme(themeValue);
-	},
-});
-
 export const ThemeProvider = (props: IThemeContext) => {
 	const theme = useAppSelector(themeSelectors.theme);
 	const dispatch = useAppDispatch();
@@ -28,6 +21,13 @@ export const ThemeProvider = (props: IThemeContext) => {
 	const changeTheme = (themeValue: Theme) => {
 		dispatch(themeActions.toggleMode(themeValue));
 	};
+
+	const ThemeContext = React.createContext({
+		theme: theme,
+		changeTheme: (themeValue: Theme) => {
+			applyTheme(themeValue);
+		},
+	});
 
 	useEffect(() => {
 		applyTheme(theme);
@@ -40,12 +40,7 @@ export const ThemeProvider = (props: IThemeContext) => {
 				changeTheme,
 			}}
 		>
-			<EuiThemeProvider
-				theme={
-					theme.includes('amsterdam') ? EuiThemeAmsterdam : EuiThemeDefault
-				}
-				colorMode={theme.includes('light') ? 'light' : 'dark'}
-			>
+			<EuiThemeProvider theme={EuiThemeAmsterdam} colorMode={theme}>
 				{props.children}
 			</EuiThemeProvider>
 		</ThemeContext.Provider>

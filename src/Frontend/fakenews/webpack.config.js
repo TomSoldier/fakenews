@@ -5,7 +5,6 @@ const { NODE_ENV, CI, WEBPACK_DEV_SERVER } = process.env;
 
 const isDevelopment = WEBPACK_DEV_SERVER === 'true' && CI == null;
 const isPuppeteer = NODE_ENV === 'puppeteer';
-const EUI = path.resolve(__dirname, './node_modules/@elastic/eui/dist/themes');
 
 function employCache(loaders) {
 	if (isDevelopment && !isPuppeteer) {

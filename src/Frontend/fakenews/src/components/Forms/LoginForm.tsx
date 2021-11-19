@@ -14,6 +14,7 @@ import { validator } from '../../services/formValidation/validator';
 import { userActions } from '../../redux/actions/userActions';
 import { useAppDispatch } from '../../redux/hooks';
 import { endpoints } from '../../configuration/api';
+import { TokenDto } from '../../models/DTO/TokenDto';
 
 export const LoginForm = React.memo(() => {
 	const navigate = useNavigate();

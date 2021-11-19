@@ -1,6 +1,7 @@
 import { userSlice } from '../slices/userSlice';
 import axios from 'axios';
 import { AppDispatch } from '../store';
+import { TokenDto } from '../../models/DTO/TokenDto';
 
 const { actions } = userSlice;
 

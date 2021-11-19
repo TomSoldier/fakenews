@@ -1,4 +1,4 @@
-interface TokenDto {
+export interface TokenDto {
 	token: string;
 	expiration: Date;
 }

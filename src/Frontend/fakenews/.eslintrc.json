@@ -57,7 +57,7 @@
 			}
 		],
 		"no-console": "warn",
-		"no-shadow": "warn",
+		"no-shadow": "off",
 		"prefer-const": "warn",
 		"prefer-spread": "warn",
 		"no-unused-expressions": [

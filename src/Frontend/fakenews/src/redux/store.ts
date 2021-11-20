@@ -9,6 +9,8 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import themeReducer from './slices/themeSlice';
+import userReducer from './slices/userSlice';
+import eventReducer from './slices/eventSlice';
 import {
 	configureStore,
 	combineReducers,
@@ -18,12 +20,13 @@ import {
 
 const reducers = combineReducers({
 	theme: themeReducer,
+	user: userReducer,
+	event: eventReducer,
 });
 
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: ['theme'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

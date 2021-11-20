@@ -1,17 +1,13 @@
-import {
-	EuiThemeAmsterdam,
-	EuiThemeDefault,
-	EuiThemeProvider,
-} from '@elastic/eui';
-import React, { ReactElement, useEffect } from 'react';
-import { themeActions } from '../../redux/actions/themeActions';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { themeSelectors } from '../../redux/selectors/themeSelectors';
-import { Theme } from '../../redux/slices/themeSlice';
-import { applyTheme } from '../theme/theme';
+import { EuiThemeDefault, EuiThemeProvider } from '@elastic/eui';
+import React, { useEffect } from 'react';
+import { themeActions } from '../../../redux/actions/themeActions';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { themeSelectors } from '../../../redux/selectors/themeSelectors';
+import { Theme } from '../../../redux/slices/themeSlice';
+import { applyTheme } from '../theme';
 
 interface IThemeContext {
-	children?: ReactElement;
+	children?: JSX.Element;
 }
 
 export const ThemeProvider = (props: IThemeContext) => {
@@ -40,7 +36,7 @@ export const ThemeProvider = (props: IThemeContext) => {
 				changeTheme,
 			}}
 		>
-			<EuiThemeProvider theme={EuiThemeAmsterdam} colorMode={theme}>
+			<EuiThemeProvider theme={EuiThemeDefault} colorMode={theme}>
 				{props.children}
 			</EuiThemeProvider>
 		</ThemeContext.Provider>

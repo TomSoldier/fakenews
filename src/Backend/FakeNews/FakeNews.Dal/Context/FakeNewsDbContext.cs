@@ -1,4 +1,5 @@
 ﻿using FakeNews.Dal.Entites;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -41,6 +42,11 @@ namespace FakeNews.Dal.Context
             {
                 entity.HasKey(a => a.Id);
             });
+
+            modelBuilder.Entity<IdentityRole>()
+                .HasData(
+                new IdentityRole { Name = Common.Roles.UserRoles.Admin, NormalizedName = Common.Roles.UserRoles.Admin.ToUpper()},
+                new IdentityRole { Name = Common.Roles.UserRoles.User, NormalizedName = Common.Roles.UserRoles.User.ToUpper()});
         }
     }
 }

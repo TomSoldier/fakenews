@@ -1,4 +1,4 @@
-﻿using FakeNews.Bll.Roles;
+﻿using FakeNews.Common.Roles;
 using FakeNews.Dal.Context;
 using FakeNews.Dal.Entites;
 using FakeNews.Transfer.Jwt;
@@ -78,11 +78,6 @@ namespace FakeNews.Bll.Users
             };
 
             await userManager.CreateAsync(user, registerUserDto.Password);
-
-            if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-            if (!await roleManager.RoleExistsAsync(UserRoles.User))
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
             if (await roleManager.RoleExistsAsync(UserRoles.User))
             {

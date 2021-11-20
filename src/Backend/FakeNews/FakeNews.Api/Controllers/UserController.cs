@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FakeNews.Api.Controllers
 {
-    [Route("api/Users")]
+    [Route("api/Users/")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -22,14 +22,14 @@ namespace FakeNews.Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/Users/login")]
+        [Route("login")]
         public Task<TokenDto> Login([FromBody] LoginDto loginDto)
         {
             return userService.LogUserInAsync(loginDto);
         }
 
         [HttpPost]
-        [Route("api/Users/register")]
+        [Route("register")]
         public Task Register([FromBody] RegisterUserDto registerUserDto)
         {
             return userService.RegisterUserAsync(registerUserDto);

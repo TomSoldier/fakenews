@@ -1,5 +1,5 @@
 ﻿using FakeNews.Bll.Articles;
-using FakeNews.Bll.Roles;
+using FakeNews.Common.Roles;
 using FakeNews.Transfer.Articles;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FakeNews.Api.Controllers
 {
-    [Route("api/Articles")]
+    [Route("api/Articles/")]
     [ApiController]
     public class ArticlesController : ControllerBase
     {
@@ -23,33 +23,54 @@ namespace FakeNews.Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/Articles/searchArticles")]
+        [Route("searchArticles")]
         public Task<List<ArticleDto>> GetArticles(ArticleFilterDto filter)
         {
             return articleService.GetArticles(filter);
         }
 
         [HttpGet]
-        [Route("api/Articles/:id")]
-        public Task<ArticleDto> GetArticleById(int id)
+        [Route("{id}")]
+        public async Task<IActionResult> GetArticleById(int id)
         {
-            return articleService.GetArticleById(id);
+            try { 
+            return Ok(await articleService.GetArticleById(id));
+            }
+            catch(Exception ex)
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
         [Authorize(Roles = UserRoles.Admin)]
-        public Task AddOrEditArticle(ArticleDto articleDto)
+        public async Task<IActionResult> AddOrEditArticle(ArticleDto articleDto)
         {
-            return articleService.AddOrEditArticle(articleDto);
+            try
+            {
+                await articleService.AddOrEditArticle(articleDto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
         }
 
-        [Route("api/Articles/:id")]
-        [Authorize(Roles = UserRoles.Admin)]
         [HttpDelete]
-        [Authorize]
-        public Task DeleteMeasurement(int id)
+        [Route("{id}")]
+        [Authorize(Roles = UserRoles.Admin)]
+        public async Task<IActionResult> DeleteMeasurement(int id)
         {
-            return articleService.DeleteArticle(id);
+            try
+            {
+                await articleService.DeleteArticle(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
         }
     }
 }

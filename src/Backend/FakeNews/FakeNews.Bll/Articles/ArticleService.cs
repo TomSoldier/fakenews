@@ -22,8 +22,8 @@ namespace FakeNews.Bll.Articles
         private readonly UserManager<User> userManager;
 
         public ArticleService(
-            FakeNewsDbContext dbContext, 
-            IMapper mapper, 
+            FakeNewsDbContext dbContext,
+            IMapper mapper,
             IHttpContextAccessor httpContextAccessor,
             UserManager<User> userManager)
         {
@@ -55,15 +55,22 @@ namespace FakeNews.Bll.Articles
         {
             var article = await dbContext.Articles.FindAsync(articleDto.Id);
 
-            if (article == null)
+            if (article != null)
             {
+                var user = await userManager.FindByNameAsync(httpContextAccessor.HttpContext.User.Identity.Name);
+                if (article.CreatedByUserId != user.Id)
+                {
+                    throw new UnauthorizedAccessException("Only the creator can edit the article");
+                }
+
                 article.CategoryId = articleDto.CategoryId;
                 article.Title = articleDto.Title;
                 article.Content = article.Content;
+
             }
             else
             {
-                dbContext.Articles.Add(new Dal.Entites.Article
+                dbContext.Articles.Add(new Article
                 {
                     Title = articleDto.Title,
                     Content = articleDto.Content,
@@ -79,6 +86,14 @@ namespace FakeNews.Bll.Articles
         public async Task DeleteArticle(int id)
         {
             var articleToDelete = await dbContext.Articles.Where(a => a.Id == id).SingleOrDefaultAsync();
+            if (articleToDelete != null)
+            {
+                var user = await userManager.FindByNameAsync(httpContextAccessor.HttpContext.User.Identity.Name);
+                if (articleToDelete.CreatedByUserId != user.Id)
+                {
+                    throw new UnauthorizedAccessException("Only the creator can delete the article");
+                }
+            }
             dbContext.Articles.Remove(articleToDelete);
             await dbContext.SaveChangesAsync();
         }

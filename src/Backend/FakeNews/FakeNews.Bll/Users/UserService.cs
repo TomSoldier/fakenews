@@ -38,7 +38,20 @@ namespace FakeNews.Bll.Users
 
         public async Task<TokenDto> LogUserInAsync(LoginDto loginDto)
         {
-            var user = await dbContext.Users.SingleAsync(u => u.Email == loginDto.Email);
+            User user;
+            try
+            {
+                user = await dbContext.Users.SingleAsync(u => u.Email == loginDto.Email);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("The email or password is invalid");
+            }
+
+            if (!await userManager.CheckPasswordAsync(user, loginDto.Password))
+            {
+                throw new ArgumentException("The email or password is invalid");
+            }
 
             var userRoles = await userManager.GetRolesAsync(user);
             var authClaims = new List<Claim>
@@ -77,11 +90,15 @@ namespace FakeNews.Bll.Users
                 SecurityStamp = Guid.NewGuid().ToString()
             };
 
-            await userManager.CreateAsync(user, registerUserDto.Password);
+            var result = await userManager.CreateAsync(user, registerUserDto.Password);
 
-            if (await roleManager.RoleExistsAsync(UserRoles.User))
+            if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(user, UserRoles.User);
+            }
+            else
+            {
+                throw new ArgumentException("The user already exists or the entered data is invalid");
             }
         }
     }

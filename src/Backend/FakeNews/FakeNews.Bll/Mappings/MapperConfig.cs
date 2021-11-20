@@ -17,7 +17,8 @@ namespace FakeNews.Bll.Mappings
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Category, CategoryDto>();
-                cfg.CreateMap<Article, ArticleDto>();
+                cfg.CreateMap<Article, ArticleDto>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : "Unassigned"));
             });
 
             config.AssertConfigurationIsValid();

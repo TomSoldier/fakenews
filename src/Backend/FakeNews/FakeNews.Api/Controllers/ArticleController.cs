@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FakeNews.Api.Controllers
 {
-    [Route("api/Articles/")]
+    [Route("api/Articles")]
     [ApiController]
     public class ArticlesController : ControllerBase
     {

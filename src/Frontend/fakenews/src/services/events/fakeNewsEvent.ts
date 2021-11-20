@@ -3,6 +3,7 @@ import { Toast } from '@elastic/eui/src/components/toast/global_toast_list';
 export enum FakeNewsEventType {
 	RegistrationSuccess,
 	RequestFailed,
+	Logout,
 }
 
 export interface FakeNewsEvent {
@@ -39,6 +40,14 @@ export function mapEventsToToasts(events: FakeNewsEvent[]): Toast[] {
 					color: 'danger',
 					iconType: 'alert',
 					text: e.message,
+				};
+			case FakeNewsEventType.Logout:
+				return {
+					id: e.id,
+					title: 'Logging out.',
+					color: 'primary',
+					iconType: 'push',
+					text: "We'll log out you in a few seconds.",
 				};
 			default:
 				return {

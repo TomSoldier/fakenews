@@ -10,10 +10,21 @@ import {
 	useGeneratedHtmlId,
 } from '@elastic/eui';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { eventActions } from '../../redux/actions/eventActions';
+import { userActions } from '../../redux/actions/userActions';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { userSelectors } from '../../redux/selectors/userSelectors';
+import {
+	createEvent,
+	FakeNewsEventType,
+} from '../../services/events/fakeNewsEvent';
 
 const HeaderUserMenu = () => {
+	const user = useAppSelector(userSelectors.userDetails);
 	const userPopoverId = useGeneratedHtmlId({ prefix: 'userPopover' });
 	const [isOpen, setIsOpen] = useState(false);
+	const dispatch = useAppDispatch();
 
 	const onMenuButtonClick = () => {
 		setIsOpen(!isOpen);
@@ -21,6 +32,11 @@ const HeaderUserMenu = () => {
 
 	const closeMenu = () => {
 		setIsOpen(false);
+	};
+
+	const handleLogout = () => {
+		dispatch(eventActions.addEvent(createEvent(FakeNewsEventType.Logout)));
+		dispatch(userActions.logout());
 	};
 
 	const button = (
@@ -31,7 +47,7 @@ const HeaderUserMenu = () => {
 			aria-label='Account menu'
 			onClick={onMenuButtonClick}
 		>
-			<EuiAvatar name='John Username' size='s' />
+			<EuiAvatar name={user?.name ?? 'Username'} size='s' />
 		</EuiHeaderSectionItemButton>
 	);
 
@@ -57,7 +73,8 @@ const HeaderUserMenu = () => {
 
 					<EuiFlexItem>
 						<EuiText>
-							<p>John Username</p>
+							<p style={{ fontSize: 20 }}>{user?.name ?? 'name'}</p>
+							{user?.role ?? 'role'}
 						</EuiText>
 
 						<EuiSpacer size='m' />
@@ -65,11 +82,11 @@ const HeaderUserMenu = () => {
 							<EuiFlexItem>
 								<EuiFlexGroup justifyContent='spaceBetween'>
 									<EuiFlexItem grow={false}>
-										<EuiLink>Profile</EuiLink>
+										<Link to='/profile'>Profile</Link>
 									</EuiFlexItem>
 
 									<EuiFlexItem grow={false}>
-										<EuiLink>Log out</EuiLink>
+										<EuiLink onClick={handleLogout}>Log out</EuiLink>
 									</EuiFlexItem>
 								</EuiFlexGroup>
 							</EuiFlexItem>

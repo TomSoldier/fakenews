@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	EuiButton,
 	EuiCheckbox,
@@ -23,16 +23,16 @@ import {
 import { validator } from '../../services/formValidation/validator';
 
 export const RegistrationForm = React.memo(() => {
-	const [form, setForm] = React.useState<Record<string, string>>({
+	const [form, setForm] = useState<Record<string, string>>({
 		username: '',
 		email: '',
 		password: '',
 		passwordConfirm: '',
 	});
-	const [agreedToTerms, setAgreedToTerms] = React.useState(false);
-	const [errors, setErrors] = React.useState<Record<string, string | boolean>>(
-		{}
-	);
+
+	const [loading, setLoading] = useState(false);
+	const [agreedToTerms, setAgreedToTerms] = useState(false);
+	const [errors, setErrors] = useState<Record<string, string | boolean>>({});
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
@@ -51,9 +51,7 @@ export const RegistrationForm = React.memo(() => {
 		password: string
 	) => {
 		axios
-			.post(baseURL + endpoints.Users.register, {
-				data: { username, email, password },
-			})
+			.post(baseURL + endpoints.Users.register, { username, email, password })
 			.then(() => {
 				dispatch(
 					eventActions.addEvent(
@@ -71,7 +69,7 @@ export const RegistrationForm = React.memo(() => {
 			.catch((error) => {
 				setErrors((errors) => ({
 					...errors,
-					form: error.response?.data?.errorMessage ?? 'Something went wrong',
+					form: error.response?.data ?? 'Something went wrong',
 				}));
 			});
 	};
@@ -97,6 +95,7 @@ export const RegistrationForm = React.memo(() => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		setLoading(true);
 
 		Object.keys(form).forEach((label) => validateInput(label, form[label]));
 		if (!Object.values(form).every((value) => Boolean(value))) {
@@ -104,11 +103,13 @@ export const RegistrationForm = React.memo(() => {
 				...errors,
 				form: 'You must fill out all fields.',
 			}));
+			setLoading(false);
 			return;
 		}
 
 		if (form.password !== form.passwordConfirm) {
 			setErrors((errors) => ({ ...errors, form: 'Passwords do not match.' }));
+			setLoading(false);
 			return;
 		}
 
@@ -117,25 +118,23 @@ export const RegistrationForm = React.memo(() => {
 				...errors,
 				form: 'You must agree to the terms and conditions.',
 			}));
+			setLoading(false);
 			return;
 		}
 
 		requestUserRegister(form.username, form.email, form.password);
+		setLoading(false);
 	};
 
 	return (
-		<EuiPanel style={{ padding: '2rem' }}>
+		<EuiPanel style={{ padding: '2rem', minWidth: 400, maxWidth: 400 }}>
 			<EuiForm
 				component='form'
 				onSubmit={handleSubmit}
 				isInvalid={Boolean(errors.form)}
 				error={[errors.form]}
 			>
-				<EuiFormRow
-					label='Username'
-					isInvalid={Boolean(errors.username)}
-					fullWidth
-				>
+				<EuiFormRow label='Username' isInvalid={Boolean(errors.username)}>
 					<EuiFieldText
 						icon='user'
 						placeholder='Username'
@@ -150,31 +149,27 @@ export const RegistrationForm = React.memo(() => {
 					helpText='Enter your email address.'
 					isInvalid={Boolean(errors.email)}
 					error='Enter a valid email address.'
-					fullWidth
 				>
 					<EuiFieldText
 						icon='email'
 						placeholder='user@gmail.com'
 						value={form.email}
 						onChange={(e) => handleInputChange('email', e.target.value)}
-						aria-label='Enter your email address.'
 						isInvalid={Boolean(errors.email)}
 						fullWidth
 					/>
 				</EuiFormRow>
 				<EuiFormRow
 					label='Password'
-					helpText='Enter your password.'
+					helpText='Enter your password which contains lowercase, uppercase, numbers, and special characters.'
 					isInvalid={Boolean(errors.password)}
-					error='The password must be at least 7 characters long.'
-					fullWidth
+					error='The password must be at least 7 characters long and contain lowercase, uppercase, numbers, and special characters.'
 				>
 					<EuiFieldPassword
 						placeholder='••••••••••••'
 						value={form.password}
 						onChange={(e) => handleInputChange('password', e.target.value)}
 						type='dual'
-						aria-label='Enter your password.'
 						isInvalid={Boolean(errors.password)}
 						fullWidth
 					/>
@@ -191,7 +186,6 @@ export const RegistrationForm = React.memo(() => {
 						value={form.passwordConfirm}
 						onChange={(e) => handlePasswordConfirmChange(e.target.value)}
 						type='dual'
-						aria-label='Confirm password.'
 						isInvalid={Boolean(errors.passwordConfirm)}
 						fullWidth
 					/>
@@ -204,7 +198,7 @@ export const RegistrationForm = React.memo(() => {
 					onChange={(e) => setAgreedToTermsCheckbox(e)}
 				/>
 				<EuiSpacer />
-				<EuiButton type='submit' fill>
+				<EuiButton type='submit' isLoading={loading} iconSide='right' fill>
 					Register
 				</EuiButton>
 			</EuiForm>

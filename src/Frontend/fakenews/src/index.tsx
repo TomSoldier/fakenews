@@ -12,12 +12,11 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { store } from './redux/store';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
-import Second from './pages/Home/Second';
 import { LoginPage } from './pages/Home/LoginPage';
 import { RegistrationPage } from './pages/Home/RegistrationPage';
 import RequireAuth from './pages/Auth/RequireAuth';
-import ProfilePage from './pages/Home/ProfilePage';
 import WithoutLoginOnly from './pages/Auth/WithoutLoginOnly';
+import ProfilePage from './pages/User/ProfilePage';
 
 registerTheme('light', [themeLight]);
 registerTheme('dark', [themeDark]);
@@ -54,14 +53,6 @@ ReactDOM.render(
 									element={
 										<RequireAuth>
 											<ProfilePage />
-										</RequireAuth>
-									}
-								/>
-								<Route
-									path='/protected'
-									element={
-										<RequireAuth>
-											<Second />
 										</RequireAuth>
 									}
 								/>

@@ -4,8 +4,10 @@ function validateEmail(text: string) {
 	return text?.indexOf('@') !== -1;
 }
 
-function validatePassword(password: string, minLength = 7) {
-	return password?.length >= minLength;
+function validatePassword(password: string) {
+	return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-,.])[A-Za-z\d@$!%*?&-,.]{7,}$/.test(
+		password
+	);
 }
 
 function validateUsername(username: string) {

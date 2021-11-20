@@ -9,6 +9,9 @@ namespace FakeNews.Bll.Articles
 {
     public interface IArticleService
     {
-        Task<List<ArticleDto>> GetArticles();
+        Task<List<ArticleDto>> GetArticles(ArticleFilterDto filter);
+        Task<ArticleDto> GetArticleById(int id);
+        Task AddOrEditArticle(ArticleDto articleDto);
+        Task DeleteArticle(int id);
     }
 }

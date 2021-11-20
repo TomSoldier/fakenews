@@ -13,6 +13,7 @@ namespace FakeNews.Dal.Context
     public class FakeNewsDbContext : IdentityDbContext<User>
     {
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public FakeNewsDbContext(DbContextOptions options) : base(options) { }
 
@@ -23,6 +24,21 @@ namespace FakeNews.Dal.Context
             modelBuilder.HasDefaultSchema("dbo");
 
             modelBuilder.Entity<Article>(entity =>
+            {
+                entity.HasKey(a => a.Id);
+
+                entity.HasOne(a => a.CreatedByUser)
+                .WithMany(u => u.Articles)
+                .HasForeignKey(a => a.CreatedByUserId)
+                .HasConstraintName("FkArticleUser");
+
+                entity.HasOne(a => a.Category)
+                .WithMany(c => c.Articles)
+                .HasForeignKey(a => a.CategoryId)
+                .HasConstraintName("FkArticleCategory");
+            });
+
+            modelBuilder.Entity<Category>(entity =>
             {
                 entity.HasKey(a => a.Id);
             });

@@ -1,0 +1,1 @@
+dotnet ef migrations script --startup-project ..\FakeNews.Api\ --output bin/migrations/scripts.sql --idempotent

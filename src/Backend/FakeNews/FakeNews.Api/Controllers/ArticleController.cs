@@ -1,4 +1,5 @@
 ﻿using FakeNews.Bll.Articles;
+using FakeNews.Common.Roles;
 using FakeNews.Transfer.Articles;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,10 +22,55 @@ namespace FakeNews.Api.Controllers
             this.articleService = articleService;
         }
 
-        [HttpGet]
-        public Task<List<ArticleDto>> GetArticles()
+        [HttpPost]
+        [Route("searchArticles")]
+        public Task<List<ArticleDto>> GetArticles(ArticleFilterDto filter)
         {
-            return articleService.GetArticles();
+            return articleService.GetArticles(filter);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetArticleById(int id)
+        {
+            try { 
+            return Ok(await articleService.GetArticleById(id));
+            }
+            catch(Exception ex)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = UserRoles.Admin)]
+        public async Task<IActionResult> AddOrEditArticle(ArticleDto articleDto)
+        {
+            try
+            {
+                await articleService.AddOrEditArticle(articleDto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        [Authorize(Roles = UserRoles.Admin)]
+        public async Task<IActionResult> DeleteMeasurement(int id)
+        {
+            try
+            {
+                await articleService.DeleteArticle(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
         }
     }
 }

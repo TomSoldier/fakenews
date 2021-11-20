@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FakeNews.Dal.Entites;
 using FakeNews.Transfer.Articles;
+using FakeNews.Transfer.Categories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,9 @@ namespace FakeNews.Bll.Mappings
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Article, ArticleDto>();
+                cfg.CreateMap<Category, CategoryDto>();
+                cfg.CreateMap<Article, ArticleDto>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : "Unassigned"));
             });
 
             config.AssertConfigurationIsValid();

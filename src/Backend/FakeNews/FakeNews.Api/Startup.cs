@@ -1,4 +1,5 @@
 using FakeNews.Bll.Articles;
+using FakeNews.Bll.Categories;
 using FakeNews.Bll.Mappings;
 using FakeNews.Bll.Users;
 using FakeNews.Dal.Context;
@@ -103,6 +104,7 @@ namespace FakeNews
                 });
 
             services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUserService, UserService>();
 
             services.AddControllers();
@@ -134,6 +136,16 @@ namespace FakeNews
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "../../../Frontend/fakenews";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
+                }
             });
         }
     }

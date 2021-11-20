@@ -37,7 +37,7 @@ const Layout = () => {
 						<EuiGlobalToastList
 							toasts={mapEventsToToasts(events)}
 							dismissToast={removeToast}
-							toastLifeTimeMs={3000}
+							toastLifeTimeMs={5000}
 						/>
 					</EuiPageContentBody>
 				</EuiPageContent>

@@ -71,10 +71,7 @@ export const RegistrationForm = React.memo(() => {
 			.catch((error) => {
 				setErrors((errors) => ({
 					...errors,
-					form:
-						error.response && error.response.data
-							? error.response.data.errorMessage
-							: 'Something went wrong',
+					form: error.response?.data?.errorMessage ?? 'Something went wrong',
 				}));
 			});
 	};

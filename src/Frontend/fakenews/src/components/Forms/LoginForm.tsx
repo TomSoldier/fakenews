@@ -13,7 +13,7 @@ import axios from 'axios';
 import { validator } from '../../services/formValidation/validator';
 import { userActions } from '../../redux/actions/userActions';
 import { useAppDispatch } from '../../redux/hooks';
-import { endpoints } from '../../configuration/api';
+import { baseURL, endpoints } from '../../configuration/api';
 import { TokenDto } from '../../models/DTO/TokenDto';
 
 export const LoginForm = React.memo(() => {
@@ -40,7 +40,7 @@ export const LoginForm = React.memo(() => {
 
 	const requestUserLogin = (email: string, password: string) => {
 		axios
-			.post<TokenDto>(endpoints.Users.login, {
+			.post<TokenDto>(baseURL + endpoints.Users.login, {
 				data: { email, password },
 			})
 			.then((response) => {
@@ -50,10 +50,7 @@ export const LoginForm = React.memo(() => {
 			.catch((error) => {
 				setErrors({
 					...errors,
-					form:
-						error.response && error.response.data
-							? error.response.data.errorMessage
-							: 'Something went wrong',
+					form: error.response?.data?.errorMessage ?? 'Something went wrong',
 				});
 			});
 	};

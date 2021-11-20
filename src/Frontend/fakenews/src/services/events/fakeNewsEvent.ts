@@ -2,6 +2,7 @@ import { Toast } from '@elastic/eui/src/components/toast/global_toast_list';
 
 export enum FakeNewsEventType {
 	RegistrationSuccess,
+	RequestFailed,
 }
 
 export interface FakeNewsEvent {
@@ -30,6 +31,14 @@ export function mapEventsToToasts(events: FakeNewsEvent[]): Toast[] {
 					color: 'success',
 					iconType: 'check',
 					text: "We'll redirect you to the login page.",
+				};
+			case FakeNewsEventType.RequestFailed:
+				return {
+					id: e.id,
+					title: 'Request failed.',
+					color: 'danger',
+					iconType: 'alert',
+					text: e.message,
 				};
 			default:
 				return {

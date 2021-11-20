@@ -1,9 +1,9 @@
-export const baseURL = 'https://localhost:44362/api';
+export const baseURL = '/api';
 
 export const endpoints = {
 	Users: {
-		register: '/Users/api/Users/register',
-		login: '/Users/api/Users/login',
+		register: '/Users/register',
+		login: '/Users/login',
 	},
 	Articles: {},
 };

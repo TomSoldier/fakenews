@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	EuiButton,
 	EuiFieldText,
@@ -20,14 +20,14 @@ export const LoginForm = React.memo(() => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const dispatch = useAppDispatch();
-	const [form, setForm] = React.useState<Record<string, string>>({
+	const [form, setForm] = useState<Record<string, string>>({
 		email: '',
 		password: '',
 	});
 
-	const [errors, setErrors] = React.useState<Record<string, boolean | string>>(
-		{}
-	);
+	const [loading, setLoading] = useState(false);
+
+	const [errors, setErrors] = useState<Record<string, boolean | string>>({});
 	const validateInput = (label: string, value: string) => {
 		const isValid = validator?.[label] ? validator?.[label]?.(value) : true;
 		setErrors({ ...errors, [label]: !isValid });
@@ -40,9 +40,7 @@ export const LoginForm = React.memo(() => {
 
 	const requestUserLogin = (email: string, password: string) => {
 		axios
-			.post<TokenDto>(baseURL + endpoints.Users.login, {
-				data: { email, password },
-			})
+			.post<TokenDto>(baseURL + endpoints.Users.login, { email, password })
 			.then((response) => {
 				dispatch(userActions.loginUser(response.data));
 				navigate(location.state?.from?.pathname || '/', { replace: true });
@@ -50,7 +48,7 @@ export const LoginForm = React.memo(() => {
 			.catch((error) => {
 				setErrors({
 					...errors,
-					form: error.response?.data?.errorMessage ?? 'Something went wrong',
+					form: error.response?.data ?? 'Something went wrong',
 				});
 			});
 	};
@@ -58,20 +56,23 @@ export const LoginForm = React.memo(() => {
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 
+		setLoading(true);
 		Object.keys(form).forEach((label) => validateInput(label, form[label]));
 		if (!Object.values(form).every((value) => Boolean(value))) {
 			setErrors({
 				...errors,
 				form: 'Please fill every fields.',
 			});
+			setLoading(false);
 			return;
 		}
 
 		requestUserLogin(form.email, form.password);
+		setLoading(false);
 	};
 
 	return (
-		<EuiPanel style={{ padding: '2rem' }}>
+		<EuiPanel style={{ padding: '2rem', minWidth: 400, maxWidth: 400 }}>
 			<EuiForm
 				title='Login'
 				component='form'
@@ -91,31 +92,22 @@ export const LoginForm = React.memo(() => {
 						placeholder='user@gmail.com'
 						value={form.email}
 						onChange={(e) => handleInputChange('email', e.target.value)}
-						aria-label='Enter your email address.'
 						isInvalid={Boolean(errors.email)}
 						fullWidth
 					/>
 				</EuiFormRow>
 
-				<EuiFormRow
-					label='Password'
-					helpText='Enter your password.'
-					isInvalid={Boolean(errors.password)}
-					error='The password must be at least 7 characters long.'
-					fullWidth
-				>
+				<EuiFormRow label='Password' helpText='Enter your password.' fullWidth>
 					<EuiFieldPassword
 						placeholder='••••••••••••'
 						value={form.password}
 						onChange={(e) => handleInputChange('password', e.target.value)}
 						type='dual'
-						aria-label='Enter your password.'
-						isInvalid={Boolean(errors.password)}
 						fullWidth
 					/>
 				</EuiFormRow>
 				<EuiSpacer />
-				<EuiButton type='submit' fill>
+				<EuiButton type='submit' isLoading={loading} iconSide='right' fill>
 					Login
 				</EuiButton>
 			</EuiForm>

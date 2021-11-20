@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31702.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FakeNews.Bll", "FakeNews.Bll\FakeNews.Bll.csproj", "{A449BD04-35F3-4BA3-B8FD-F0F5672715A5}"
 EndProject
@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FakeNews.Dal", "FakeNews.Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FakeNews.Api", "FakeNews.Api\FakeNews.Api.csproj", "{7785A981-089B-4E4C-966D-364B989CAB6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeNews.Transfer", "FakeNews.Transfer\FakeNews.Transfer.csproj", "{7965A882-E93D-4DAF-9215-BCBE305D36CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FakeNews.Transfer", "FakeNews.Transfer\FakeNews.Transfer.csproj", "{7965A882-E93D-4DAF-9215-BCBE305D36CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeNews.Common", "FakeNews.Common\FakeNews.Common.csproj", "{1F82C321-A70D-4D45-AEB1-B6BE2BE90F7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7965A882-E93D-4DAF-9215-BCBE305D36CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7965A882-E93D-4DAF-9215-BCBE305D36CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7965A882-E93D-4DAF-9215-BCBE305D36CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F82C321-A70D-4D45-AEB1-B6BE2BE90F7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F82C321-A70D-4D45-AEB1-B6BE2BE90F7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F82C321-A70D-4D45-AEB1-B6BE2BE90F7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F82C321-A70D-4D45-AEB1-B6BE2BE90F7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

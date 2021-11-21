@@ -56,13 +56,14 @@ namespace FakeNews.Bll.Users
             var userRoles = await userManager.GetRolesAsync(user);
             var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(Common.Roles.ClaimTypes.Name, user.UserName),
+                    new Claim(Common.Roles.ClaimTypes.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 
             foreach (var userRole in userRoles)
             {
-                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                authClaims.Add(new Claim(Common.Roles.ClaimTypes.Role, userRole));
             }
 
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
@@ -98,7 +99,7 @@ namespace FakeNews.Bll.Users
             }
             else
             {
-                throw new ArgumentException("The user already exists or the entered data is invalid");
+                throw new ArgumentException("The user already exists or the entered data is invalid. Password must be at least 6 characters long, and contain at both letters, numbers and 1 special (non alphanumeric) character");
             }
         }
     }

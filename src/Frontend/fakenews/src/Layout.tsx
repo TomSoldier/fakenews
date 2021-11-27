@@ -12,6 +12,8 @@ import { mapEventsToToasts } from './services/events/fakeNewsEvent';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { Toast } from '@elastic/eui/src/components/toast/global_toast_list';
 import { eventActions } from './redux/actions/eventActions';
+import { useEffect } from 'react';
+import { categoryActions } from './redux/actions/categoryActions';
 
 const Layout = () => {
 	const dispatch = useAppDispatch();
@@ -20,6 +22,10 @@ const Layout = () => {
 	const removeToast = (removedToast: Toast) => {
 		dispatch(eventActions.removeEvent(removedToast.id));
 	};
+
+	useEffect(() => {
+		dispatch(categoryActions.fetchCategories());
+	}, [dispatch]);
 
 	return (
 		<EuiPage paddingSize='none' className='eui-fullHeight'>

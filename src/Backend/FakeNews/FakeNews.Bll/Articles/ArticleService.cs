@@ -97,5 +97,26 @@ namespace FakeNews.Bll.Articles
             dbContext.Articles.Remove(articleToDelete);
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task<List<ArticleDto>> GetHomepageArticles()
+        {
+            return await dbContext.Articles
+                .Where(a => a.ShownOnHomepage)
+                .ProjectTo<ArticleDto>(mapper)
+                .ToListAsync();
+        }
+
+        public async Task InvertShownOnHomepage(int id)
+        {
+            var article = await dbContext.Articles.FindAsync(id);
+
+            if(article == null)
+            {
+                throw new ArgumentException("The article with this ID doesn't exist");
+            }
+
+            article.ShownOnHomepage = !article.ShownOnHomepage;
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

@@ -13,5 +13,7 @@ namespace FakeNews.Bll.Articles
         Task<ArticleDto> GetArticleById(int id);
         Task AddOrEditArticle(ArticleDto articleDto);
         Task DeleteArticle(int id);
+        Task<List<ArticleDto>> GetHomepageArticles();
+        Task InvertShownOnHomepage(int id);
     }
 }

@@ -4,6 +4,7 @@ using FakeNews.Dal.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FakeNews.Dal.Migrations
 {
     [DbContext(typeof(FakeNewsDbContext))]
-    partial class FakeNewsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211127154419_CommentAndMultipleCategories")]
+    partial class CommentAndMultipleCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -216,14 +218,14 @@ namespace FakeNews.Dal.Migrations
                         new
                         {
                             Id = "5edaaf3b-9908-4864-8700-5d20f4a0abd0",
-                            ConcurrencyStamp = "fc8f371d-fbcc-4bf2-bae1-31949d5007ec",
+                            ConcurrencyStamp = "7126b7af-da5d-4efd-add3-b0c687b5b472",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "b7c62976-02e6-4bef-b03d-84f9551e82e1",
-                            ConcurrencyStamp = "1915e87f-ba4f-44ed-b563-037b71b10d2c",
+                            ConcurrencyStamp = "117c50cd-f94e-435c-a68c-12c7013ad6ae",
                             Name = "User",
                             NormalizedName = "USER"
                         });

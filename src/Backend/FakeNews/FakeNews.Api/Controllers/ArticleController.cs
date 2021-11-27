@@ -33,10 +33,11 @@ namespace FakeNews.Api.Controllers
         [Route("{id}")]
         public async Task<IActionResult> GetArticleById(int id)
         {
-            try { 
-            return Ok(await articleService.GetArticleById(id));
+            try
+            {
+                return Ok(await articleService.GetArticleById(id));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return NotFound();
             }
@@ -70,6 +71,27 @@ namespace FakeNews.Api.Controllers
             catch (Exception ex)
             {
                 return Unauthorized(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("EditCategories")]
+        [Authorize(Roles = UserRoles.Admin)]
+        public async Task<IActionResult> EditArticleCategories(ArticleCategoryEditDto dto)
+        {
+            try
+            {
+                await articleService.EditArticleCategories(dto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException)
+                    return NotFound(ex.Message);
+                else if (ex is UnauthorizedAccessException)
+                    return Unauthorized(ex.Message);
+                else
+                    throw;
             }
         }
     }

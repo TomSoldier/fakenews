@@ -9,13 +9,7 @@ namespace FakeNews.Transfer.Categories
 {
     public class CategoryDto
     {
-        public CategoryDto()
-        {
-            Articles = new List<ArticleDto>();
-        }
-
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<ArticleDto> Articles { get; }
     }
 }

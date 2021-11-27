@@ -1,4 +1,5 @@
 ﻿using FakeNews.Transfer.Articles;
+using FakeNews.Transfer.Comment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,9 @@ namespace FakeNews.Bll.Articles
         Task AddOrEditArticle(ArticleDto articleDto);
         Task DeleteArticle(int id);
         Task<List<ArticleDto>> GetHomepageArticles();
+        Task EditArticleCategories(ArticleCategoryEditDto dto);
         Task InvertShownOnHomepage(int id);
+
+        Task PostCommentToArticle(PostCommentDto dto);
     }
 }

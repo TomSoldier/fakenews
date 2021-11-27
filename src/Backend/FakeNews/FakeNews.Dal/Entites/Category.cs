@@ -10,11 +10,11 @@ namespace FakeNews.Dal.Entites
     {
         public Category()
         {
-            Articles = new List<Article>();
+            ArticleCategories = new List<ArticleCategory>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public virtual ICollection<Article> Articles { get;}
+        public virtual ICollection<ArticleCategory> ArticleCategories { get;}
     }
 }

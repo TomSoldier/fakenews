@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace FakeNews.Dal.Entites
 {
-    public class User: IdentityUser
+    public class User : IdentityUser
     {
         public User()
         {
             Articles = new List<Article>();
         }
 
-        public virtual ICollection<Article> Articles { get; } 
+        public virtual ICollection<Article> Articles { get; }
+        public virtual ICollection<Comment> Comments { get; }
     }
 }

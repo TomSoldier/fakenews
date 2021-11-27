@@ -39,6 +39,7 @@ namespace FakeNews.Bll.Articles
             return await dbContext.Articles
                 .Include(a => a.ArticleCategories)
                 .ThenInclude(ac => ac.Category)
+                .Where(a => !a.ValidTo.HasValue || a.ValidTo <= DateTime.Now)
                 .Where(filter.CategoryId.HasValue, a => a.ArticleCategories.Any(ac => ac.CategoryId == filter.CategoryId))
                 .Where(filter.FromDate.HasValue, a => a.CreatedDate >= filter.FromDate)
                 .Where(filter.ToDate.HasValue, a => a.CreatedDate <= filter.ToDate)

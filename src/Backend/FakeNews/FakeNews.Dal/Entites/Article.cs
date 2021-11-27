@@ -18,6 +18,7 @@ namespace FakeNews.Dal.Entites
         public string CreatedByUserId { get; set; }
         public string Content { get; set; }
         public bool ShownOnHomepage { get; set; }
+        public DateTime? ValidTo { get; set; }
         public DateTime CreatedDate { get; set; }
         public virtual User CreatedByUser { get; set; }
         public virtual ICollection<ArticleCategory> ArticleCategories { get;}

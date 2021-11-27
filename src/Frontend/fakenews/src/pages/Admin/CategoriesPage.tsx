@@ -1,4 +1,5 @@
 import {
+	EuiBadge,
 	EuiFlexGroup,
 	EuiFlexItem,
 	EuiPageTemplate,
@@ -32,25 +33,28 @@ const CategoriesPage = () => {
 			pageContentProps={{ style: { width: '100%' } }}
 		>
 			<EuiFlexGroup>
-				<EuiFlexItem style={{ textAlign: 'center' }}>
-					<EuiText>
-						<h3>Available categories</h3>
-					</EuiText>
-				</EuiFlexItem>
-				<EuiFlexItem style={{ textAlign: 'center' }}>
-					<EuiText>
-						<h3>New category</h3>
-					</EuiText>
-				</EuiFlexItem>
-			</EuiFlexGroup>
-			<EuiFlexGroup>
 				<EuiFlexItem>
 					<EuiPanel>
+						<EuiFlexItem style={{ textAlign: 'center' }}>
+							<EuiText>
+								<h3>Available categories</h3>
+							</EuiText>
+						</EuiFlexItem>
 						<EuiPinnableListGroup
 							onPinClick={handlePinClick}
 							listItems={categories.map((category) => ({
 								id: category.id.toString(),
-								label: category.name,
+								label: (
+									<EuiBadge
+										color={category.colorCode}
+										style={{ minWidth: 75, textAlign: 'center' }}
+									>
+										{category.name}
+									</EuiBadge>
+								),
+								style: {
+									color: category.colorCode,
+								},
 								extraAction: {
 									color: 'danger',
 									iconType: 'trash',
@@ -64,6 +68,11 @@ const CategoriesPage = () => {
 				</EuiFlexItem>
 				<EuiFlexItem grow>
 					<EuiPanel>
+						<EuiFlexItem style={{ textAlign: 'center' }}>
+							<EuiText>
+								<h3>New category</h3>
+							</EuiText>
+						</EuiFlexItem>
 						<CategoryForm />
 					</EuiPanel>
 				</EuiFlexItem>

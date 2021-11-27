@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import {
 	EuiButton,
+	EuiColorPicker,
 	EuiFieldText,
 	EuiForm,
 	EuiFormRow,
 	EuiSpacer,
+	useColorPickerState,
 } from '@elastic/eui';
 import { validator } from '../../services/formValidation/validator';
 import { useAppDispatch } from '../../redux/hooks';
@@ -17,6 +19,7 @@ export const CategoryForm = React.memo(() => {
 	});
 
 	const [loading, setLoading] = useState(false);
+	const [color, setColor] = useColorPickerState('#FFF');
 
 	const [errors, setErrors] = useState<Record<string, boolean | string>>({});
 	const validateInput = (label: string, value: string) => {
@@ -30,7 +33,7 @@ export const CategoryForm = React.memo(() => {
 	};
 
 	const requestCreateCategory = (categoryName: string) => {
-		dispatch(categoryActions.createCategory(categoryName));
+		dispatch(categoryActions.createCategory(categoryName, color));
 		dispatch(categoryActions.fetchCategories());
 	};
 
@@ -50,6 +53,7 @@ export const CategoryForm = React.memo(() => {
 
 		requestCreateCategory(form.categoryName);
 		setLoading(false);
+		setErrors({});
 		setForm({ categoryName: '' });
 	};
 
@@ -77,7 +81,13 @@ export const CategoryForm = React.memo(() => {
 					fullWidth
 				/>
 			</EuiFormRow>
-
+			<EuiFormRow
+				label='Color picker'
+				helpText='This color picker is inside of a form row'
+				fullWidth
+			>
+				<EuiColorPicker color={color} onChange={setColor} fullWidth />
+			</EuiFormRow>
 			<EuiSpacer />
 			<EuiButton type='submit' isLoading={loading} iconSide='right' fill>
 				Create

@@ -31,11 +31,12 @@ export const categoryActions = {
 			}
 		};
 	},
-	createCategory: (categoryName: string) => {
+	createCategory: (categoryName: string, colorCode: string) => {
 		return async (dispatch: AppDispatch) => {
 			try {
 				await httpClient.post(baseURL + endpoints.Categories.categories, {
 					name: categoryName,
+					colorCode,
 				});
 				dispatch(categoryActions.fetchCategories());
 			} catch (error) {

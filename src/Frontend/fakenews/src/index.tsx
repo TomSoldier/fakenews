@@ -25,6 +25,7 @@ import Admin from './pages/Admin/Admin';
 import NotFound from './pages/Home/NotFound';
 import UsersPage from './pages/Admin/UsersPage';
 import ArticlesPage from './pages/Admin/ArticlesPage';
+import NewsByCategoryPage from './pages/Home/NewsByCategoryPage';
 
 registerTheme('light', [themeLight]);
 registerTheme('dark', [themeDark]);
@@ -83,6 +84,7 @@ ReactDOM.render(
 										</RequireAuth>
 									}
 								/>
+								<Route path='category/:id' element={<NewsByCategoryPage />} />
 								{adminRoutes}
 								<Route path='*' element={<NotFound />} />
 							</Route>

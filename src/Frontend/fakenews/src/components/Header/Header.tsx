@@ -36,7 +36,7 @@ export default () => {
 				{
 					items: [
 						<EuiHeaderLogo key='logo' iconType='logoElastic' href=''>
-							Elastic
+							FakeNews
 						</EuiHeaderLogo>,
 						<CategoryMenu key='categoryMenu' />,
 					],

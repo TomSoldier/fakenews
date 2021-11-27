@@ -20,11 +20,34 @@ import ProfilePage from './pages/User/ProfilePage';
 import DashboardPage from './pages/Admin/DashboardPage';
 import RequireAdminRole from './pages/Auth/RequireAdminRole';
 import Forbidden from './pages/Home/Forbidden';
+import CategoriesPage from './pages/Admin/CategoriesPage';
+import Admin from './pages/Admin/Admin';
+import NotFound from './pages/Home/NotFound';
+import UsersPage from './pages/Admin/UsersPage';
+import ArticlesPage from './pages/Admin/ArticlesPage';
 
 registerTheme('light', [themeLight]);
 registerTheme('dark', [themeDark]);
 
 const persistor = persistStore(store);
+
+const adminRoutes = (
+	<Route
+		path='admin'
+		element={
+			<RequireAuth>
+				<RequireAdminRole>
+					<Admin />
+				</RequireAdminRole>
+			</RequireAuth>
+		}
+	>
+		<Route index element={<DashboardPage />} />
+		<Route path='users' element={<UsersPage />} />
+		<Route path='articles' element={<ArticlesPage />} />
+		<Route path='categories' element={<CategoriesPage />} />
+	</Route>
+);
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -60,16 +83,8 @@ ReactDOM.render(
 										</RequireAuth>
 									}
 								/>
-								<Route
-									path='admin'
-									element={
-										<RequireAuth>
-											<RequireAdminRole>
-												<DashboardPage />
-											</RequireAdminRole>
-										</RequireAuth>
-									}
-								/>
+								{adminRoutes}
+								<Route path='*' element={<NotFound />} />
 							</Route>
 						</Routes>
 					</BrowserRouter>

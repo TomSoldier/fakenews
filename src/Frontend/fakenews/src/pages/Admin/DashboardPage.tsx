@@ -8,12 +8,14 @@ import {
 	IconType,
 } from '@elastic/eui';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const renderOption = (label: string, iconType: IconType) => (
-	<>
-		<EuiFlexItem>
+const renderOption = (label: string, iconType: IconType, linkTo: string) => (
+	<EuiFlexItem>
+		<Link to={linkTo}>
 			<EuiShowFor sizes={['xs', 's']}>
 				<EuiKeyPadMenuItem
+					betaBadgeIconType='1'
 					isSelected
 					label={label}
 					style={{ width: '100%', padding: 10 }}
@@ -30,8 +32,8 @@ const renderOption = (label: string, iconType: IconType) => (
 					<EuiIcon type={iconType} size='xxl' />
 				</EuiKeyPadMenuItem>
 			</EuiShowFor>
-		</EuiFlexItem>
-	</>
+		</Link>
+	</EuiFlexItem>
 );
 
 const DashboardPage = () => {
@@ -41,10 +43,10 @@ const DashboardPage = () => {
 			pageHeader={{ pageTitle: 'Admin dashboard' }}
 		>
 			<EuiFlexGrid columns={4}>
-				{renderOption('Users', 'users')}
-				{renderOption('Articles', 'documents')}
-				{renderOption('Categories', 'submodule')}
-				{renderOption('NotImplemented', 'alert')}
+				{renderOption('Users', 'users', '/admin/users')}
+				{renderOption('Articles', 'documents', '/admin/articles')}
+				{renderOption('Categories', 'submodule', '/admin/categories')}
+				{renderOption('NotImplemented', 'alert', '/admin/notfound')}
 			</EuiFlexGrid>
 		</EuiPageTemplate>
 	);

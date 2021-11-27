@@ -1,9 +1,9 @@
 import { userSlice } from '../slices/userSlice';
-import axios from 'axios';
 import { AppDispatch } from '../store';
 import { TokenDto } from '../../models/DTO/TokenDto';
 import jwt_decode from 'jwt-decode';
 import { TokenDetails } from '../../models/TokenDetails';
+import httpClient from '../../services/http/http';
 
 const { actions } = userSlice;
 
@@ -19,13 +19,13 @@ export const userActions = {
 					tokenDetails: jwt_decode<TokenDetails>(tokenDto.token),
 				})
 			);
-			axios.defaults.headers.common.Authorization = `Bearer ${tokenDto.token}`;
+			httpClient.defaults.headers.common.Authorization = `Bearer ${tokenDto.token}`;
 		};
 	},
 	logout: () => {
 		return async (dispatch: AppDispatch) => {
 			dispatch(actions.clearUserInfos());
-			axios.defaults.headers.common.Authorization = '';
+			httpClient.defaults.headers.common.Authorization = '';
 		};
 	},
 };

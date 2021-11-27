@@ -14,10 +14,13 @@ import { Toast } from '@elastic/eui/src/components/toast/global_toast_list';
 import { eventActions } from './redux/actions/eventActions';
 import { useEffect } from 'react';
 import { categoryActions } from './redux/actions/categoryActions';
+import { userSelectors } from './redux/selectors/userSelectors';
+import httpClient from './services/http/http';
 
 const Layout = () => {
 	const dispatch = useAppDispatch();
 	const events = useAppSelector((state) => state.event.events);
+	const token = useAppSelector(userSelectors.jwtToken);
 
 	const removeToast = (removedToast: Toast) => {
 		dispatch(eventActions.removeEvent(removedToast.id));
@@ -25,7 +28,10 @@ const Layout = () => {
 
 	useEffect(() => {
 		dispatch(categoryActions.fetchCategories());
-	}, [dispatch]);
+		if (token) {
+			httpClient.defaults.headers.common.Authorization = `Bearer ${token}`;
+		}
+	}, [dispatch, token]);
 
 	return (
 		<EuiPage paddingSize='none' className='eui-fullHeight'>

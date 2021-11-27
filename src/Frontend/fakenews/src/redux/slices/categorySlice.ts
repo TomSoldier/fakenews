@@ -14,7 +14,12 @@ export const categorySlice = createSlice({
 	initialState,
 	reducers: {
 		fetchCategories: (state, { payload }: PayloadAction<CategoryDto[]>) => {
-			state.categories = [...payload];
+			state.categories = payload;
+		},
+		removeCategory: (state, { payload }: PayloadAction<number>) => {
+			state.categories = state.categories.filter(
+				(category) => category.id !== payload
+			);
 		},
 	},
 });

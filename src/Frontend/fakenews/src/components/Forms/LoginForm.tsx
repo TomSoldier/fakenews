@@ -9,12 +9,12 @@ import {
 	EuiPanel,
 } from '@elastic/eui';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
 import { validator } from '../../services/formValidation/validator';
 import { userActions } from '../../redux/actions/userActions';
 import { useAppDispatch } from '../../redux/hooks';
 import { baseURL, endpoints } from '../../configuration/api';
 import { TokenDto } from '../../models/DTO/TokenDto';
+import httpClient from '../../services/http/http';
 
 export const LoginForm = React.memo(() => {
 	const navigate = useNavigate();
@@ -39,7 +39,7 @@ export const LoginForm = React.memo(() => {
 	};
 
 	const requestUserLogin = (email: string, password: string) => {
-		axios
+		httpClient
 			.post<TokenDto>(baseURL + endpoints.Users.login, { email, password })
 			.then((response) => {
 				dispatch(userActions.loginUser(response.data));

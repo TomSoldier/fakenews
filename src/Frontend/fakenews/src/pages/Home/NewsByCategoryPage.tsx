@@ -1,45 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import { EuiEmptyPrompt, EuiPageTemplate } from '@elastic/eui';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { baseURL, endpoints } from '../../configuration/api';
-import { CategoryDto } from '../../models/DTO/CategoryDto';
-import { eventActions } from '../../redux/actions/eventActions';
-import { useAppDispatch } from '../../redux/hooks';
-import {
-	createEvent,
-	FakeNewsEventType,
-} from '../../services/events/fakeNewsEvent';
-import httpClient from '../../services/http/http';
+import { categoryActions } from '../../redux/actions/categoryActions';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { categorySelectors } from '../../redux/selectors/categorySelectors';
 
 const NewsByCategoryPage = () => {
-	const [category, setCategory] = useState<CategoryDto>();
 	const params = useParams();
 	const dispatch = useAppDispatch();
+	const category = useAppSelector(categorySelectors.actualCategory);
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const getCategory = async () => {
-			try {
-				const response = await httpClient.get<CategoryDto>(
-					baseURL + `${endpoints.Categories.categories}/${params.id}`
-				);
-				setCategory(response.data);
-			} catch (error) {
-				dispatch(
-					eventActions.addEvent(
-						createEvent(
-							FakeNewsEventType.RequestFailed,
-							`Failed to fetch category with id: ${params.id}`
-						)
-					)
-				);
-				navigate('/notfound');
-			}
-		};
+		dispatch(categoryActions.getActualCategory(params.id));
+	}, [dispatch, params.id]);
 
-		getCategory();
-	}, [dispatch, navigate, params.id]);
+	if (!category) {
+		navigate('/notfound');
+	}
 
-	return category ? <>{category.name}</> : <>szar</>;
+	return (
+		<EuiPageTemplate
+			template='empty'
+			pageContentProps={{ paddingSize: 'none' }}
+			pageHeader={{
+				pageTitle: category?.name,
+				style: { textAlign: 'center' },
+			}}
+		>
+			<EuiEmptyPrompt
+				title={
+					<span>
+						There are currently no news in this category. Check back later.
+					</span>
+				}
+			/>
+		</EuiPageTemplate>
+	);
 };
 
 export default NewsByCategoryPage;

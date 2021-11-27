@@ -3,6 +3,7 @@ import { CategoryDto } from '../../models/DTO/CategoryDto';
 
 export interface CategoryState {
 	categories: CategoryDto[];
+	actualCategory?: CategoryDto;
 }
 
 const initialState: CategoryState = {
@@ -20,6 +21,12 @@ export const categorySlice = createSlice({
 			state.categories = state.categories.filter(
 				(category) => category.id !== payload
 			);
+		},
+		setActualCategory: (
+			state,
+			{ payload }: PayloadAction<CategoryDto | undefined>
+		) => {
+			state.actualCategory = payload;
 		},
 	},
 });

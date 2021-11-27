@@ -75,4 +75,27 @@ export const categoryActions = {
 			}
 		};
 	},
+	getActualCategory: (id?: string) => {
+		return async (dispatch: AppDispatch) => {
+			if (!id) {
+				return;
+			}
+			try {
+				const response = await httpClient.get<CategoryDto>(
+					baseURL + `${endpoints.Categories.categories}/${id}`
+				);
+				dispatch(actions.setActualCategory(response.data));
+			} catch (error) {
+				dispatch(
+					eventActions.addEvent(
+						createEvent(
+							FakeNewsEventType.RequestFailed,
+							`Failed to fetch category with id: ${id}`
+						)
+					)
+				);
+				dispatch(actions.setActualCategory(undefined));
+			}
+		};
+	},
 };

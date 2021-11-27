@@ -4,6 +4,7 @@ using FakeNews.Bll.Extensions;
 using FakeNews.Dal.Context;
 using FakeNews.Dal.Entites;
 using FakeNews.Transfer.Articles;
+using FakeNews.Transfer.Comment;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +37,9 @@ namespace FakeNews.Bll.Articles
         public async Task<List<ArticleDto>> GetArticles(ArticleFilterDto filter)
         {
             return await dbContext.Articles
-                .Where(filter.CategoryId.HasValue, a => a.CategoryId == filter.CategoryId)
+                .Include(a => a.ArticleCategories)
+                .ThenInclude(ac => ac.Category)
+                .Where(filter.CategoryId.HasValue, a => a.ArticleCategories.Any(ac => ac.CategoryId == filter.CategoryId))
                 .Where(filter.FromDate.HasValue, a => a.CreatedDate >= filter.FromDate)
                 .Where(filter.ToDate.HasValue, a => a.CreatedDate <= filter.ToDate)
                 .ProjectTo<ArticleDto>(mapper)
@@ -47,6 +50,8 @@ namespace FakeNews.Bll.Articles
         {
             return await dbContext.Articles
                 .Where(a => a.Id == id)
+                .Include(a => a.ArticleCategories)
+                .ThenInclude(ac => ac.Category)
                 .ProjectTo<ArticleDto>(mapper)
                 .SingleAsync();
         }
@@ -63,7 +68,6 @@ namespace FakeNews.Bll.Articles
                     throw new UnauthorizedAccessException("Only the creator can edit the article");
                 }
 
-                article.CategoryId = articleDto.CategoryId;
                 article.Title = articleDto.Title;
                 article.Content = article.Content;
 
@@ -74,7 +78,6 @@ namespace FakeNews.Bll.Articles
                 {
                     Title = articleDto.Title,
                     Content = articleDto.Content,
-                    CategoryId = articleDto.CategoryId,
                     CreatedDate = DateTime.Now,
                     CreatedByUserId = (await userManager.FindByNameAsync(httpContextAccessor.HttpContext.User.Identity.Name)).Id,
                 });
@@ -110,12 +113,65 @@ namespace FakeNews.Bll.Articles
         {
             var article = await dbContext.Articles.FindAsync(id);
 
-            if(article == null)
+            if (article == null)
             {
                 throw new ArgumentException("The article with this ID doesn't exist");
             }
 
             article.ShownOnHomepage = !article.ShownOnHomepage;
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task EditArticleCategories(ArticleCategoryEditDto dto)
+        {
+            var article = await dbContext.Articles
+                .Where(a => a.Id == dto.ArticleId)
+                .Include(a => a.ArticleCategories)
+                .SingleOrDefaultAsync();
+
+            if (article == null)
+            {
+                throw new ArgumentException("The article with this ID doesn't exist");
+            }
+
+            var user = await userManager.FindByNameAsync(httpContextAccessor.HttpContext.User.Identity.Name);
+            if (article.CreatedByUserId != user.Id)
+            {
+                throw new UnauthorizedAccessException("Only the creator can edit the article");
+            }
+
+            dbContext.ArticleCategories.RemoveRange(article.ArticleCategories);
+
+            foreach (var categoryId in dto.CategoryIds)
+            {
+                dbContext.ArticleCategories.Add(new ArticleCategory
+                {
+                    ArticleId = article.Id,
+                    CategoryId = categoryId
+                });
+            }
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task PostCommentToArticle(PostCommentDto dto)
+        {
+            var article = await dbContext.Articles.FindAsync(dto.ArticleId);
+
+            if (article == null)
+            {
+                throw new ArgumentException("The article with this ID doesn't exist");
+            }
+
+            dbContext.Comments.Add(new Comment
+            {
+                ArticleId = article.Id,
+                Content = dto.Content,
+                CreatedAt = DateTime.Now,
+                UserId = (await userManager.FindByNameAsync(httpContextAccessor.HttpContext.User.Identity.Name)).Id
+                
+            });
+
             await dbContext.SaveChangesAsync();
         }
     }

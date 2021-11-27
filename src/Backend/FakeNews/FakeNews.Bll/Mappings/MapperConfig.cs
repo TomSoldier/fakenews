@@ -2,6 +2,7 @@
 using FakeNews.Dal.Entites;
 using FakeNews.Transfer.Articles;
 using FakeNews.Transfer.Categories;
+using FakeNews.Transfer.Comment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,10 @@ namespace FakeNews.Bll.Mappings
             {
                 cfg.CreateMap<Category, CategoryDto>();
                 cfg.CreateMap<Article, ArticleDto>()
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : "Unassigned"));
+                .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.ArticleCategories.Select(ac => ac.Category)));
+
+                cfg.CreateMap<Comment, CommentDto>()
+                .ForMember(dest => dest.ByUsername, opt => opt.MapFrom(src => src.User.UserName));
             });
 
             config.AssertConfigurationIsValid();

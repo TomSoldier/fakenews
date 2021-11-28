@@ -6,6 +6,8 @@ import {
 	EuiPageTemplate,
 	EuiSpacer,
 	EuiText,
+	EuiHorizontalRule,
+	EuiBadge,
 } from '@elastic/eui';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -71,6 +73,26 @@ const ArticlePage = () => {
 					style: { textAlign: 'center' },
 				}}
 			>
+				<EuiFlexGroup justifyContent='spaceBetween'>
+					<EuiFlexItem>
+						<div>
+							{actualArticle.categories.map((x) => (
+								<EuiBadge
+									key={x.name}
+									color={x.colorCode}
+									style={{ minWidth: 75, textAlign: 'center' }}
+								>
+									{x.name}
+								</EuiBadge>
+							))}
+						</div>
+					</EuiFlexItem>
+					<EuiFlexItem style={{ alignItems: 'end' }}>
+						{moment(actualArticle.createdDate).format('YYYY-MM-DD HH:mm:ss')}
+					</EuiFlexItem>
+				</EuiFlexGroup>
+
+				<EuiHorizontalRule />
 				<div dangerouslySetInnerHTML={{ __html: actualArticle.content }} />
 				<EuiSpacer size='xxl' />
 				{isLoggedIn && (

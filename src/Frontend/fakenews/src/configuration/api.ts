@@ -16,4 +16,7 @@ export const endpoints = {
 	Comments: {
 		comments: '/Comments',
 	},
+	HomePage: {
+		homepage: '/HomePage',
+	},
 };

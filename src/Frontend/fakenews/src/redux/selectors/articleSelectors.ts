@@ -32,6 +32,8 @@ const actualArticle = (state: RootState) => state.article.actualArticle;
 const actualComments = (state: RootState) =>
 	state.article.actualArticle?.comments;
 
+const homePageArticles = (state: RootState) => state.article.homepageArticles;
+
 export const articleSelectors = {
 	title,
 	createdByUserId,
@@ -47,4 +49,5 @@ export const articleSelectors = {
 	articles,
 	actualArticle,
 	actualComments,
+	homePageArticles,
 };

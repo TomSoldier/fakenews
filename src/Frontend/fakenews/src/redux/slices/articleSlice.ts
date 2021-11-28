@@ -10,10 +10,12 @@ export interface ArticleState {
 	articles: ArticleDto[];
 	articlesByCategoryId: ArticleDto[];
 	actualArticle: ArticleDto;
+	homepageArticles: ArticleDto[];
 }
 
 const initialState: ArticleState = {
 	editedArticle: {
+		id: 0,
 		title: '',
 		createdByUserId: '',
 		content: '',
@@ -27,6 +29,7 @@ const initialState: ArticleState = {
 	articles: [],
 	articlesByCategoryId: [],
 	actualArticle: {
+		id: 0,
 		title: '',
 		createdByUserId: '',
 		content: '',
@@ -36,6 +39,7 @@ const initialState: ArticleState = {
 		categories: [],
 		comments: [],
 	},
+	homepageArticles: [],
 };
 
 export const articleSlice = createSlice({
@@ -80,6 +84,7 @@ export const articleSlice = createSlice({
 		},
 		setBackDefault: (state) => {
 			state.editedArticle = {
+				id: 0,
 				title: '',
 				createdByUserId: '',
 				content: '',
@@ -111,6 +116,9 @@ export const articleSlice = createSlice({
 		},
 		addArticleComment: (state, { payload }: PayloadAction<CommentDto>) => {
 			state.actualArticle.comments = [...state.actualArticle.comments, payload];
+		},
+		setHomePageArticles: (state, { payload }: PayloadAction<ArticleDto[]>) => {
+			state.homepageArticles = payload;
 		},
 	},
 });

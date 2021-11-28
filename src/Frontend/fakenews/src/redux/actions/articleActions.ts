@@ -131,4 +131,20 @@ export const articleActions = {
 			}
 		};
 	},
+	fetchHomePageArticles: () => {
+		return async (dispatch: AppDispatch) => {
+			try {
+				const reponse = await httpClient.get<ArticleDto[]>(
+					baseURL + `${endpoints.HomePage.homepage}`
+				);
+				dispatch(actions.setHomePageArticles(reponse.data));
+			} catch (_) {
+				dispatch(
+					eventActions.addEvent(
+						createEvent(FakeNewsEventType.RequestFailed, 'Articles GET failed')
+					)
+				);
+			}
+		};
+	},
 };

@@ -222,14 +222,14 @@ namespace FakeNews.Dal.Migrations
                         new
                         {
                             Id = "5edaaf3b-9908-4864-8700-5d20f4a0abd0",
-                            ConcurrencyStamp = "5be7d522-42d0-4316-bfda-d05d55e54327",
+                            ConcurrencyStamp = "969dac47-d70e-4a97-b3bb-d19eee798f90",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "b7c62976-02e6-4bef-b03d-84f9551e82e1",
-                            ConcurrencyStamp = "e784f858-471d-4a7d-b364-f44a90f30f38",
+                            ConcurrencyStamp = "0ade724f-36a0-4673-bc5d-de892d5624df",
                             Name = "User",
                             NormalizedName = "USER"
                         });

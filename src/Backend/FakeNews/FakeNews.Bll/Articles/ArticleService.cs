@@ -182,5 +182,19 @@ namespace FakeNews.Bll.Articles
 
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<CommentDto>> GetCommentsByArticleId(int articleId)
+        {
+            var article = await dbContext.Articles.FindAsync(articleId);
+            if (article == null)
+            {
+                throw new ArgumentException("The article with this ID doesn't exist");
+            }
+
+            return await dbContext.Comments
+                .Where(x => x.ArticleId == articleId)
+                .ProjectTo<CommentDto>(mapper)
+                .ToListAsync() ;
+        }
     }
 }

@@ -11,6 +11,7 @@ import {
 } from '@elastic/eui';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Role } from '../../models/Role';
 import { eventActions } from '../../redux/actions/eventActions';
 import { userActions } from '../../redux/actions/userActions';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -78,17 +79,15 @@ const HeaderUserMenu = () => {
 						</EuiText>
 
 						<EuiSpacer size='m' />
-						<EuiFlexGroup>
-							<EuiFlexItem>
-								<EuiFlexGroup justifyContent='spaceBetween'>
-									<EuiFlexItem grow={false}>
-										<Link to='/profile'>Profile</Link>
-									</EuiFlexItem>
+						<EuiFlexGroup justifyContent='spaceBetween' alignItems='center'>
+							{user?.role === Role.Admin && (
+								<EuiFlexItem grow={false}>
+									<Link to='/admin'>Dashboard</Link>
+								</EuiFlexItem>
+							)}
 
-									<EuiFlexItem grow={false}>
-										<EuiLink onClick={handleLogout}>Log out</EuiLink>
-									</EuiFlexItem>
-								</EuiFlexGroup>
+							<EuiFlexItem grow={false}>
+								<EuiLink onClick={handleLogout}>Log out</EuiLink>
 							</EuiFlexItem>
 						</EuiFlexGroup>
 					</EuiFlexItem>

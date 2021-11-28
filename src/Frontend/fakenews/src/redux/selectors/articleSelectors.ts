@@ -28,6 +28,10 @@ const initialContent = (state: RootState) => state.article.initialContent;
 
 const articles = (state: RootState) => state.article.articles;
 
+const actualArticle = (state: RootState) => state.article.actualArticle;
+const actualComments = (state: RootState) =>
+	state.article.actualArticle?.comments;
+
 export const articleSelectors = {
 	title,
 	createdByUserId,
@@ -41,4 +45,6 @@ export const articleSelectors = {
 	fullArticle,
 	initialContent,
 	articles,
+	actualArticle,
+	actualComments,
 };

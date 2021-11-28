@@ -3,6 +3,7 @@ using FakeNews.Common.Roles;
 using FakeNews.Transfer.Comment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FakeNews.Api.Controllers
@@ -20,9 +21,15 @@ namespace FakeNews.Api.Controllers
 
         [HttpPost]
         [Authorize(Roles = $"{UserRoles.Admin},{UserRoles.User}")]
-        public Task AddComment(PostCommentDto dto)
+        public async Task AddComment(PostCommentDto dto)
         {
-            return articleService.PostCommentToArticle(dto);
+            await articleService.PostCommentToArticle(dto);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IEnumerable<CommentDto>> GetComments(int id)
+        {
+            return await articleService.GetCommentsByArticleId(id);
         }
     }
 }

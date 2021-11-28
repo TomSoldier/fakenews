@@ -1,5 +1,6 @@
 import { baseURL, endpoints } from '../../configuration/api';
 import { ArticleDto } from '../../models/DTO/ArticleDto';
+import { CommentDto } from '../../models/DTO/CommentDto';
 import {
 	createEvent,
 	FakeNewsEventType,
@@ -62,6 +63,69 @@ export const articleActions = {
 				dispatch(
 					eventActions.addEvent(
 						createEvent(FakeNewsEventType.RequestFailed, 'Articles GET failed')
+					)
+				);
+			}
+		};
+	},
+	fetchActualArticle: (articleId?: string) => {
+		return async (dispatch: AppDispatch) => {
+			if (!articleId) {
+				return;
+			}
+			try {
+				const response = await httpClient.get<ArticleDto>(
+					baseURL + `${endpoints.Articles.getArticle}/${articleId}`
+				);
+				dispatch(actions.setActualArticle(response.data));
+			} catch (_) {
+				dispatch(
+					eventActions.addEvent(
+						createEvent(FakeNewsEventType.RequestFailed, 'Article GET failed')
+					)
+				);
+			}
+		};
+	},
+	postComment: (
+		content: string,
+		createdAt: Date,
+		userId: string,
+		articleId: number,
+		byUsername: string
+	) => {
+		return async (dispatch: AppDispatch) => {
+			try {
+				await httpClient.post(baseURL + `${endpoints.Comments.comments}/`, {
+					content,
+					createdAt,
+					userId,
+					articleId,
+					byUsername,
+				});
+			} catch (_) {
+				dispatch(
+					eventActions.addEvent(
+						createEvent(FakeNewsEventType.RequestFailed, 'Comment POST failed')
+					)
+				);
+			}
+		};
+	},
+	fetchArticleComments: (id?: string) => {
+		return async (dispatch: AppDispatch) => {
+			if (!id) {
+				return;
+			}
+			try {
+				const reponse = await httpClient.get<CommentDto[]>(
+					baseURL + `${endpoints.Comments.comments}/${id}`
+				);
+				dispatch(actions.setActualArticleComments(reponse.data));
+			} catch (_) {
+				dispatch(
+					eventActions.addEvent(
+						createEvent(FakeNewsEventType.RequestFailed, 'Comments GET failed')
 					)
 				);
 			}

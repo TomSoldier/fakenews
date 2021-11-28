@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import moment, { Moment } from 'moment';
 import { ArticleDto } from '../../models/DTO/ArticleDto';
 import { CategoryDto } from '../../models/DTO/CategoryDto';
+import { CommentDto } from '../../models/DTO/CommentDto';
 
 export interface ArticleState {
 	editedArticle: ArticleDto;
 	initialContent: string;
 	articles: ArticleDto[];
 	articlesByCategoryId: ArticleDto[];
+	actualArticle: ArticleDto;
 }
 
 const initialState: ArticleState = {
@@ -24,6 +26,16 @@ const initialState: ArticleState = {
 	initialContent: 'Tell a story...',
 	articles: [],
 	articlesByCategoryId: [],
+	actualArticle: {
+		title: '',
+		createdByUserId: '',
+		content: '',
+		shownOnHomepage: false,
+		createdDate: moment(),
+		createdByUserUserName: '',
+		categories: [],
+		comments: [],
+	},
 };
 
 export const articleSlice = createSlice({
@@ -87,6 +99,18 @@ export const articleSlice = createSlice({
 			{ payload }: PayloadAction<ArticleDto[]>
 		) => {
 			state.articlesByCategoryId = payload;
+		},
+		setActualArticle: (state, { payload }: PayloadAction<ArticleDto>) => {
+			state.actualArticle = payload;
+		},
+		setActualArticleComments: (
+			state,
+			{ payload }: PayloadAction<CommentDto[]>
+		) => {
+			state.actualArticle.comments = payload;
+		},
+		addArticleComment: (state, { payload }: PayloadAction<CommentDto>) => {
+			state.actualArticle.comments = [...state.actualArticle.comments, payload];
 		},
 	},
 });

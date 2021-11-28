@@ -6,10 +6,14 @@ export const endpoints = {
 		login: '/Users/login',
 	},
 	Articles: {
+		getArticle: '/Articles',
 		postArticle: '/Articles',
 		articles: '/Articles/searchArticles',
 	},
 	Categories: {
 		categories: '/Categories',
+	},
+	Comments: {
+		comments: '/Comments',
 	},
 };

@@ -4,6 +4,7 @@ export enum FakeNewsEventType {
 	RegistrationSuccess,
 	RequestFailed,
 	Logout,
+	DeleteCategorySuccess,
 }
 
 export interface FakeNewsEvent {
@@ -48,6 +49,14 @@ export function mapEventsToToasts(events: FakeNewsEvent[]): Toast[] {
 					color: 'primary',
 					iconType: 'push',
 					text: "We'll log out you in a few seconds.",
+				};
+			case FakeNewsEventType.DeleteCategorySuccess:
+				return {
+					id: e.id,
+					title: 'Deleted.',
+					color: 'success',
+					iconType: 'check',
+					text: `Category '${e.message}' deleted successfully.`,
 				};
 			default:
 				return {

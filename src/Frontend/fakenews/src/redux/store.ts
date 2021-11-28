@@ -11,6 +11,7 @@ import storage from 'redux-persist/lib/storage';
 import themeReducer from './slices/themeSlice';
 import userReducer from './slices/userSlice';
 import eventReducer from './slices/eventSlice';
+import categoryReducer from './slices/categorySlice';
 import {
 	configureStore,
 	combineReducers,
@@ -22,6 +23,7 @@ const reducers = combineReducers({
 	theme: themeReducer,
 	user: userReducer,
 	event: eventReducer,
+	category: categoryReducer,
 });
 
 const persistConfig = {

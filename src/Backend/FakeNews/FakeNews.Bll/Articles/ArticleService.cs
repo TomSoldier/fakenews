@@ -71,6 +71,8 @@ namespace FakeNews.Bll.Articles
 
                 article.Title = articleDto.Title;
                 article.Content = article.Content;
+                article.ArticleCategories.Clear();
+                articleDto.Categories.ForEach(x => article.ArticleCategories.Add(new ArticleCategory { ArticleId = article.Id, CategoryId = x.Id }));
 
             }
             else

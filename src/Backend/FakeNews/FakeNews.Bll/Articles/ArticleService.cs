@@ -86,7 +86,7 @@ namespace FakeNews.Bll.Articles
                     Content = articleDto.Content,
                     CreatedDate = DateTime.Now,
                     CreatedByUserId = (await userManager.FindByNameAsync(httpContextAccessor.HttpContext.User.Identity.Name)).Id,
-                    ShownOnHomepage = article.ShownOnHomepage,
+                    ShownOnHomepage = articleDto.ShownOnHomepage,
                     ValidTo = articleDto.ValidTo,
                 };
 

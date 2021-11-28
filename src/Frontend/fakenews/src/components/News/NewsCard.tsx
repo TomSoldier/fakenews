@@ -1,4 +1,11 @@
-import { EuiButton, EuiCard, EuiFlexGroup, EuiFlexItem } from '@elastic/eui';
+import {
+	EuiBadge,
+	EuiButton,
+	EuiCard,
+	EuiFlexGroup,
+	EuiFlexItem,
+	EuiHorizontalRule,
+} from '@elastic/eui';
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { CategoryDto } from '../../models/DTO/CategoryDto';
@@ -7,7 +14,7 @@ interface IProps {
 	articleId: number;
 	content: string;
 	title: string;
-	category: CategoryDto;
+	categories: CategoryDto[];
 }
 
 const NewsCard = (props: IProps) => {
@@ -32,12 +39,28 @@ const NewsCard = (props: IProps) => {
 	}
 
 	const makeDescription = () => {
+		const categoriesOfCard = props.categories.map((x) => (
+			<EuiBadge
+				key={x.name}
+				color={x.colorCode}
+				style={{ minWidth: 75, textAlign: 'center' }}
+			>
+				{x.name}
+			</EuiBadge>
+		));
+
 		const strippedContent = stripHtml(props.content);
-		if (strippedContent.length < 100) {
-			return strippedContent;
-		} else {
-			return strippedContent.substr(0, 100);
-		}
+
+		return (
+			<div>
+				<EuiHorizontalRule />
+				{categoriesOfCard}
+				<EuiHorizontalRule />
+				{strippedContent.length < 100
+					? strippedContent
+					: strippedContent.substr(0, 100)}
+			</div>
+		);
 	};
 
 	return (
@@ -48,12 +71,12 @@ const NewsCard = (props: IProps) => {
 				<div>
 					<img
 						key={props.articleId}
-						src={`https://source.unsplash.com/400x200/?${props.category.name}`}
+						src={`https://source.unsplash.com/400x200/?${props.categories[0]?.name}`}
 					/>
 				</div>
 			}
 			title={props.title}
-			description={`${makeDescription()}.....`}
+			description={makeDescription()}
 			footer={cardFooterContent}
 		/>
 	);

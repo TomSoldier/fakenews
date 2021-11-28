@@ -60,7 +60,7 @@ const NewsByCategoryPage = () => {
 								articleId={x.id}
 								title={x.title}
 								content={x.content}
-								category={x.categories[0]}
+								categories={x.categories}
 							/>
 						</EuiFlexItem>
 					))}

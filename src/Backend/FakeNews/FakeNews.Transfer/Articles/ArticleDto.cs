@@ -12,6 +12,7 @@ namespace FakeNews.Transfer.Articles
         public string CreatedByUserId { get; set; }
         public string Content { get; set; }
         public bool ShownOnHomepage { get; set; }
+        public DateTime? ValidTo { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedByUserUserName { get; set; }
         public List<CategoryDto> Categories { get; set; }

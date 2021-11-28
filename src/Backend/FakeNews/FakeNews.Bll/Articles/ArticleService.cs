@@ -75,13 +75,18 @@ namespace FakeNews.Bll.Articles
             }
             else
             {
-                dbContext.Articles.Add(new Article
+                var newArticle = new Article
                 {
+                    Id = 0,
                     Title = articleDto.Title,
                     Content = articleDto.Content,
                     CreatedDate = DateTime.Now,
                     CreatedByUserId = (await userManager.FindByNameAsync(httpContextAccessor.HttpContext.User.Identity.Name)).Id,
-                });
+                };
+
+                articleDto.Categories.ForEach(x => newArticle.ArticleCategories.Add(new ArticleCategory { ArticleId = newArticle.Id, CategoryId = x.Id }));
+
+                dbContext.Articles.Add(newArticle);
             }
 
             await dbContext.SaveChangesAsync();

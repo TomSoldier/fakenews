@@ -17,7 +17,7 @@ export const articleActions = {
 	uploadArticle: (article: ArticleDto) => {
 		return async (dispatch: AppDispatch) => {
 			try {
-				httpClient.post(baseURL + `${endpoints.Articles.articles}`, article);
+				httpClient.post(baseURL + `${endpoints.Articles.postArticle}`, article);
 				dispatch(
 					eventActions.addEvent(
 						createEvent(FakeNewsEventType.ArticleUploadSuccess)

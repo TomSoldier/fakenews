@@ -5,7 +5,9 @@ export const endpoints = {
 		register: '/Users/register',
 		login: '/Users/login',
 	},
-	Articles: {},
+	Articles: {
+		articles: '/Articles/searchArticles',
+	},
 	Categories: {
 		categories: '/Categories',
 	},

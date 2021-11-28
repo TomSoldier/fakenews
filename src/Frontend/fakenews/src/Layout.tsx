@@ -4,6 +4,7 @@ import {
 	EuiPageBody,
 	EuiPageContent,
 	EuiPageContentBody,
+	EuiSpacer,
 } from '@elastic/eui';
 import * as React from 'react';
 import Header from './components/Header/Header';
@@ -37,6 +38,7 @@ const Layout = () => {
 		<EuiPage paddingSize='none' className='eui-fullHeight'>
 			<EuiPageBody className='eui-fullHeight'>
 				<Header />
+				<EuiSpacer />
 				<EuiPageContent
 					color='transparent'
 					borderRadius='none'

@@ -4,25 +4,27 @@ import {
 	EuiFilterGroup,
 	EuiPopover,
 	EuiPopoverTitle,
-	EuiFieldSearch,
 	EuiFilterSelectItem,
 	FilterChecked,
 	EuiBadge,
 } from '@elastic/eui';
 import React, { useState } from 'react';
+import { CategoryDto } from '../../models/DTO/CategoryDto';
 
 interface Item {
-	name: string;
-	colorCode: string;
+	category: CategoryDto;
 	checked?: FilterChecked;
 }
 
 interface IMultiSelectProps {
 	items: Item[];
+	onChange: (categories: CategoryDto[]) => void;
 }
 
 const MultiSelect = (props: IMultiSelectProps) => {
+	const [items, setItems] = useState<Item[]>(props.items);
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+	const filteredItems = items.filter((item) => item.checked === 'on');
 
 	const onButtonClick = () => {
 		setIsPopoverOpen(!isPopoverOpen);
@@ -30,13 +32,12 @@ const MultiSelect = (props: IMultiSelectProps) => {
 
 	const closePopover = () => {
 		setIsPopoverOpen(false);
+		props.onChange(filteredItems.map((x) => x.category));
 	};
 
 	const filterGroupPopoverId = useGeneratedHtmlId({
 		prefix: 'filterGroupPopover',
 	});
-
-	const [items, setItems] = useState<Item[]>(props.items);
 
 	function updateItem(index: number) {
 		if (!items[index]) {
@@ -63,20 +64,18 @@ const MultiSelect = (props: IMultiSelectProps) => {
 			onClick={onButtonClick}
 			isSelected={isPopoverOpen}
 		>
-			Categories:{' '}
-			{items
-				.filter((item) => item.checked === 'on')
-				.map((category) => {
-					return (
-						<EuiBadge
-							key={category.name}
-							color={category.colorCode}
-							style={{ minWidth: 75, textAlign: 'center' }}
-						>
-							{category.name}
-						</EuiBadge>
-					);
-				})}
+			{filteredItems.length === 0 && 'Empty'}
+			{filteredItems.map((item) => {
+				return (
+					<EuiBadge
+						key={item.category.name}
+						color={item.category.colorCode}
+						style={{ minWidth: 75, textAlign: 'center' }}
+					>
+						{item.category.name}
+					</EuiBadge>
+				);
+			})}
 		</EuiFilterButton>
 	);
 
@@ -89,9 +88,7 @@ const MultiSelect = (props: IMultiSelectProps) => {
 				closePopover={closePopover}
 				panelPaddingSize='none'
 			>
-				<EuiPopoverTitle paddingSize='s'>
-					<EuiFieldSearch compressed />
-				</EuiPopoverTitle>
+				<EuiPopoverTitle paddingSize='s'>Select categories</EuiPopoverTitle>
 				<div className='euiFilterSelect__items'>
 					{items.map((item, index) => (
 						<EuiFilterSelectItem
@@ -99,7 +96,7 @@ const MultiSelect = (props: IMultiSelectProps) => {
 							key={index}
 							onClick={() => updateItem(index)}
 						>
-							{item.name}
+							{item.category.name}
 						</EuiFilterSelectItem>
 					))}
 				</div>

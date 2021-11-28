@@ -56,6 +56,7 @@ namespace FakeNews.Bll.Users
             var userRoles = await userManager.GetRolesAsync(user);
             var authClaims = new List<Claim>
                 {
+                    new Claim(Common.Roles.ClaimTypes.UserId, user.Id),
                     new Claim(Common.Roles.ClaimTypes.Name, user.UserName),
                     new Claim(Common.Roles.ClaimTypes.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),

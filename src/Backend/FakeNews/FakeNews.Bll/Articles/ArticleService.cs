@@ -73,6 +73,8 @@ namespace FakeNews.Bll.Articles
                 article.Content = article.Content;
                 article.ArticleCategories.Clear();
                 articleDto.Categories.ForEach(x => article.ArticleCategories.Add(new ArticleCategory { ArticleId = article.Id, CategoryId = x.Id }));
+                article.ShownOnHomepage = articleDto.ShownOnHomepage;
+                article.ValidTo = articleDto.ValidTo;
 
             }
             else
@@ -84,6 +86,8 @@ namespace FakeNews.Bll.Articles
                     Content = articleDto.Content,
                     CreatedDate = DateTime.Now,
                     CreatedByUserId = (await userManager.FindByNameAsync(httpContextAccessor.HttpContext.User.Identity.Name)).Id,
+                    ShownOnHomepage = article.ShownOnHomepage,
+                    ValidTo = articleDto.ValidTo,
                 };
 
                 articleDto.Categories.ForEach(x => newArticle.ArticleCategories.Add(new ArticleCategory { ArticleId = newArticle.Id, CategoryId = x.Id }));

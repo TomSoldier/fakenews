@@ -1,17 +1,26 @@
 import { EuiButton, EuiCard, EuiFlexGroup, EuiFlexItem } from '@elastic/eui';
 import React from 'react';
+import { useNavigate } from 'react-router';
+import { CategoryDto } from '../../models/DTO/CategoryDto';
 
 interface IProps {
 	articleId: number;
 	content: string;
 	title: string;
+	category: CategoryDto;
 }
 
 const NewsCard = (props: IProps) => {
+	const navigate = useNavigate();
+
+	const handleClick = () => {
+		navigate(`/articles/${props.articleId}`);
+	};
+
 	const cardFooterContent = (
 		<EuiFlexGroup justifyContent='flexEnd'>
 			<EuiFlexItem grow={false}>
-				<EuiButton>Go for it</EuiButton>
+				<EuiButton onClick={handleClick}>Read more...</EuiButton>
 			</EuiFlexItem>
 		</EuiFlexGroup>
 	);
@@ -33,14 +42,18 @@ const NewsCard = (props: IProps) => {
 
 	return (
 		<EuiCard
+			key={props.articleId}
 			textAlign='left'
 			image={
 				<div>
-					<img src='https://source.unsplash.com/400x200/?Nature' />
+					<img
+						key={props.articleId}
+						src={`https://source.unsplash.com/400x200/?${props.category.name}`}
+					/>
 				</div>
 			}
 			title={props.title}
-			description={makeDescription()}
+			description={`${makeDescription()}.....`}
 			footer={cardFooterContent}
 		/>
 	);

@@ -15,11 +15,16 @@ const Home = () => {
 
 	return (
 		<>
-			<EuiFlexGrid columns={3}>
+			<EuiFlexGrid columns={4}>
 				{homePageArticles &&
 					homePageArticles.map((x) => (
 						<EuiFlexItem key={x.id}>
-							<NewsCard articleId={x.id} title={x.title} content={x.content} />
+							<NewsCard
+								articleId={x.id}
+								title={x.title}
+								content={x.content}
+								category={x.categories[0]}
+							/>
 						</EuiFlexItem>
 					))}
 			</EuiFlexGrid>

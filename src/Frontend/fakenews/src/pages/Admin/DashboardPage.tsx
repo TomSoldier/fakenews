@@ -19,13 +19,14 @@ const renderOption = (
 	isDisabled?: boolean
 ) => (
 	<EuiFlexItem>
-		<Link to={linkTo}>
+		<Link to={isDisabled ? '#' : linkTo}>
 			<EuiShowFor sizes={['xs', 's']}>
 				<EuiKeyPadMenuItem
 					betaBadgeIconType='1'
 					isSelected
 					label={label}
 					style={{ width: '100%', padding: 10 }}
+					onClick={(e) => e.preventDefault()}
 					disabled={isDisabled}
 				>
 					<EuiIcon type={iconType} size='xxl' />

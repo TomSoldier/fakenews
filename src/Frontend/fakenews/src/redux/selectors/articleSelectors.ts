@@ -34,6 +34,9 @@ const actualComments = (state: RootState) =>
 
 const homePageArticles = (state: RootState) => state.article.homepageArticles;
 
+const articlesByCategoryId = (state: RootState) =>
+	state.article.articlesByCategoryId;
+
 export const articleSelectors = {
 	title,
 	createdByUserId,
@@ -50,4 +53,5 @@ export const articleSelectors = {
 	actualArticle,
 	actualComments,
 	homePageArticles,
+	articlesByCategoryId,
 };

@@ -25,7 +25,8 @@ function employCache(loaders) {
 module.exports = {
 	entry: './src/index.tsx',
 	output: {
-		path: path.resolve(__dirname, 'dist'),
+		path: path.resolve('dist'),
+		publicPath: '/',
 		filename: 'bundle.js',
 	},
 	resolve: {

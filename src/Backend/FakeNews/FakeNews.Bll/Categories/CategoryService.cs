@@ -4,12 +4,9 @@ using FakeNews.Bll.Extensions;
 using FakeNews.Dal.Context;
 using FakeNews.Dal.Entites;
 using FakeNews.Transfer.Categories;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FakeNews.Bll.Categories
@@ -32,12 +29,14 @@ namespace FakeNews.Bll.Categories
             if (category != null)
             {
                 category.Name = dto.Name;
+                category.ColorCode = dto.ColorCode;
             }
             else
             {
                 dbContext.Categories.Add(new Category
                 {
-                    Name = dto.Name
+                    Name = dto.Name,
+                    ColorCode = dto.ColorCode
                 });
             }
 

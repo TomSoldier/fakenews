@@ -12,7 +12,6 @@ import {
 } from '@elastic/eui';
 import { Link, useNavigate } from 'react-router-dom';
 import { delay } from 'lodash';
-import axios from 'axios';
 import { useAppDispatch } from '../../redux/hooks';
 import { baseURL, endpoints } from '../../configuration/api';
 import { eventActions } from '../../redux/actions/eventActions';
@@ -21,6 +20,7 @@ import {
 	FakeNewsEventType,
 } from '../../services/events/fakeNewsEvent';
 import { validator } from '../../services/formValidation/validator';
+import httpClient from '../../services/http/http';
 
 export const RegistrationForm = React.memo(() => {
 	const [form, setForm] = useState<Record<string, string>>({
@@ -50,7 +50,7 @@ export const RegistrationForm = React.memo(() => {
 		email: string,
 		password: string
 	) => {
-		axios
+		httpClient
 			.post(baseURL + endpoints.Users.register, { username, email, password })
 			.then(() => {
 				dispatch(

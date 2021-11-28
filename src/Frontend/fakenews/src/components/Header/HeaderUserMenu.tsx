@@ -47,7 +47,7 @@ const HeaderUserMenu = () => {
 			aria-label='Account menu'
 			onClick={onMenuButtonClick}
 		>
-			<EuiAvatar name={user?.name ?? 'Username'} size='s' />
+			<EuiAvatar name='user' iconType='user' />
 		</EuiHeaderSectionItemButton>
 	);
 
@@ -68,7 +68,7 @@ const HeaderUserMenu = () => {
 					responsive={false}
 				>
 					<EuiFlexItem grow={false}>
-						<EuiAvatar name='John Username' size='xl' />
+						<EuiAvatar name='user' size='xl' iconType='user' />
 					</EuiFlexItem>
 
 					<EuiFlexItem>

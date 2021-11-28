@@ -5,7 +5,10 @@ export const endpoints = {
 		register: '/Users/register',
 		login: '/Users/login',
 	},
-	Articles: {},
+	Articles: {
+		postArticle: '/Articles',
+		articles: '/Articles/searchArticles',
+	},
 	Categories: {
 		categories: '/Categories',
 	},

@@ -7,4 +7,5 @@ export interface TokenDetails {
 	exp: number;
 	iss: string;
 	aud: string;
+	userid: string;
 }

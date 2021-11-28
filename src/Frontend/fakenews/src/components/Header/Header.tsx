@@ -31,6 +31,7 @@ export default () => {
 
 	return (
 		<EuiHeader
+			position='fixed'
 			theme={isDarkThemeEnabled ? 'dark' : 'default'}
 			sections={[
 				{

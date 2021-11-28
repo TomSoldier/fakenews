@@ -12,6 +12,7 @@ import themeReducer from './slices/themeSlice';
 import userReducer from './slices/userSlice';
 import eventReducer from './slices/eventSlice';
 import categoryReducer from './slices/categorySlice';
+import articleReducer from './slices/articleSlice';
 import {
 	configureStore,
 	combineReducers,
@@ -24,6 +25,7 @@ const reducers = combineReducers({
 	user: userReducer,
 	event: eventReducer,
 	category: categoryReducer,
+	article: articleReducer,
 });
 
 const persistConfig = {

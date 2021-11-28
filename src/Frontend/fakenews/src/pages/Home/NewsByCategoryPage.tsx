@@ -1,6 +1,7 @@
 import { EuiEmptyPrompt, EuiPageTemplate } from '@elastic/eui';
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { articleActions } from '../../redux/actions/articleActions';
 import { categoryActions } from '../../redux/actions/categoryActions';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { categorySelectors } from '../../redux/selectors/categorySelectors';
@@ -13,6 +14,7 @@ const NewsByCategoryPage = () => {
 
 	useEffect(() => {
 		dispatch(categoryActions.getActualCategory(params.id));
+		dispatch(articleActions.fetchArticlesInCategory(params.id));
 	}, [dispatch, params.id]);
 
 	if (!category) {

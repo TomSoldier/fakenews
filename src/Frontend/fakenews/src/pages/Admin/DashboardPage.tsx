@@ -9,8 +9,15 @@ import {
 } from '@elastic/eui';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../redux/hooks';
+import { categorySelectors } from '../../redux/selectors/categorySelectors';
 
-const renderOption = (label: string, iconType: IconType, linkTo: string) => (
+const renderOption = (
+	label: string,
+	iconType: IconType,
+	linkTo: string,
+	isDisabled?: boolean
+) => (
 	<EuiFlexItem>
 		<Link to={linkTo}>
 			<EuiShowFor sizes={['xs', 's']}>
@@ -19,6 +26,7 @@ const renderOption = (label: string, iconType: IconType, linkTo: string) => (
 					isSelected
 					label={label}
 					style={{ width: '100%', padding: 10 }}
+					disabled={isDisabled}
 				>
 					<EuiIcon type={iconType} size='xxl' />
 				</EuiKeyPadMenuItem>
@@ -28,6 +36,7 @@ const renderOption = (label: string, iconType: IconType, linkTo: string) => (
 					isSelected
 					label={label}
 					style={{ width: 200, height: 200, padding: 10 }}
+					disabled={isDisabled}
 				>
 					<EuiIcon type={iconType} size='xxl' />
 				</EuiKeyPadMenuItem>
@@ -37,6 +46,8 @@ const renderOption = (label: string, iconType: IconType, linkTo: string) => (
 );
 
 const DashboardPage = () => {
+	const categoryCount = useAppSelector(categorySelectors.count);
+	const isDisabled = categoryCount === 0;
 	return (
 		<EuiPageTemplate
 			template='centeredBody'
@@ -44,8 +55,13 @@ const DashboardPage = () => {
 		>
 			<EuiFlexGrid columns={4}>
 				{renderOption('Users', 'users', '/admin/users')}
-				{renderOption('Articles', 'documents', '/admin/articles')}
-				{renderOption('Categories', 'submodule', '/admin/categories')}
+				{renderOption(
+					'New article',
+					'documents',
+					'/admin/articles',
+					isDisabled
+				)}
+				{renderOption('Manage categories', 'submodule', '/admin/categories')}
 				{renderOption('NotImplemented', 'alert', '/admin/notfound')}
 			</EuiFlexGrid>
 		</EuiPageTemplate>

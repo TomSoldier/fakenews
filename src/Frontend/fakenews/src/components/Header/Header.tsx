@@ -35,7 +35,11 @@ export default () => {
 			sections={[
 				{
 					items: [
-						<EuiHeaderLogo key='logo' iconType='logoElastic' href=''>
+						<EuiHeaderLogo
+							key='logo'
+							iconType='logoElastic'
+							onClick={() => navigate('/')}
+						>
 							FakeNews
 						</EuiHeaderLogo>,
 						<CategoryMenu key='categoryMenu' />,

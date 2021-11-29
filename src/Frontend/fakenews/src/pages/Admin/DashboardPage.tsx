@@ -55,15 +55,13 @@ const DashboardPage = () => {
 			pageHeader={{ pageTitle: 'Admin dashboard' }}
 		>
 			<EuiFlexGrid columns={4}>
-				{renderOption('Users', 'users', '/admin/users')}
 				{renderOption(
-					'New article',
+					'New/Edit article',
 					'documents',
 					'/admin/articles',
 					isDisabled
 				)}
 				{renderOption('Manage categories', 'submodule', '/admin/categories')}
-				{renderOption('NotImplemented', 'alert', '/admin/notfound')}
 			</EuiFlexGrid>
 		</EuiPageTemplate>
 	);

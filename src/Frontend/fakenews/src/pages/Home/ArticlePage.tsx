@@ -78,10 +78,10 @@ const ArticlePage = () => {
 	const items = [
 		<EuiContextMenuItem
 			key='Show on home'
-			icon={actualArticle.shownOnHomepage ? 'eyeClosed' : 'eye'}
+			icon={actualArticle?.shownOnHomepage ? 'eyeClosed' : 'eye'}
 			onClick={handleSetShow}
 		>
-			{actualArticle.shownOnHomepage ? 'Remove from home' : 'Show on home'}
+			{actualArticle?.shownOnHomepage ? 'Remove from home' : 'Show on home'}
 		</EuiContextMenuItem>,
 		<EuiContextMenuItem key='edit' icon='pencil' onClick={handleEdit}>
 			Edit
@@ -126,7 +126,7 @@ const ArticlePage = () => {
 		if (actualArticle.id === 0) {
 			navigate('/');
 		}
-	}, [actualArticle.id, dispatch, navigate, params.id]);
+	}, [actualArticle?.id, dispatch, navigate, params.id]);
 
 	if (actualArticle) {
 		return (

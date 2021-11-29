@@ -1,5 +1,6 @@
 import {
 	EuiBadge,
+	EuiCollapsibleNavGroup,
 	EuiFlexGroup,
 	EuiFlexItem,
 	EuiHorizontalRule,
@@ -36,17 +37,26 @@ const SearchPage = () => {
 							<EuiPanel className='eui-yScroll' hasShadow={false}>
 								{searchResult && (
 									<EuiFlexGroup direction='column'>
-										<EuiFlexItem>
-											<EuiText>
-												<h2>{`${searchResult.length} results`}</h2>
-											</EuiText>
-											<EuiHorizontalRule />
-										</EuiFlexItem>
-										{searchResult.length === 0 && (
+										<EuiShowFor sizes={['xs', 's']}>
 											<EuiFlexItem>
-												<span>No results.</span>
+												<EuiCollapsibleNavGroup
+													title='Detailed search'
+													isCollapsible={false}
+												>
+													<SearchForm />
+												</EuiCollapsibleNavGroup>
+												<EuiHorizontalRule />
 											</EuiFlexItem>
-										)}
+										</EuiShowFor>
+										<EuiShowFor sizes={['m', 'l', 'xl']}>
+											<EuiFlexItem style={{ textAlign: 'center' }}>
+												<EuiText>
+													<h1>Search results</h1>
+												</EuiText>
+												<EuiHorizontalRule />
+											</EuiFlexItem>{' '}
+										</EuiShowFor>
+
 										{searchResult.map((x) => (
 											<EuiFlexItem key={x.id}>
 												<EuiPanel>
@@ -99,7 +109,9 @@ const SearchPage = () => {
 									<EuiText>
 										<h2>Detailed search</h2>
 									</EuiText>
-									<SearchForm />
+									<EuiPanel>
+										<SearchForm />
+									</EuiPanel>
 								</div>
 							</EuiFlexItem>
 						</EuiShowFor>

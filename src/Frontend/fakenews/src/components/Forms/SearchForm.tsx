@@ -77,46 +77,44 @@ const SearchForm = () => {
 	};
 
 	return (
-		<EuiPanel style={{ padding: '2rem' }}>
-			<EuiForm title='Login' component='form' onSubmit={handleSubmit}>
-				<EuiFormRow label='Category' helpText='Select category' fullWidth>
-					<EuiSuperSelect
-						options={options}
-						valueOfSelected={value}
-						onChange={setValue}
-					/>
-				</EuiFormRow>
+		<EuiForm title='Login' component='form' onSubmit={handleSubmit}>
+			<EuiFormRow label='Category' helpText='Select category' fullWidth>
+				<EuiSuperSelect
+					options={options}
+					valueOfSelected={value}
+					onChange={setValue}
+				/>
+			</EuiFormRow>
 
-				<EuiFormRow label='From Date' fullWidth>
-					<EuiDatePicker
-						placeholder='Pick date'
-						selected={form.fromDate}
-						value={form.fromDate?.toString()}
-						onChange={handleFromDateChange}
-						fullWidth
-					></EuiDatePicker>
-				</EuiFormRow>
-				<EuiFormRow label='To Date' fullWidth>
-					<EuiDatePicker
-						placeholder='Pick date'
-						selected={form.toDate}
-						value={form.toDate?.toString()}
-						onChange={handleToDateChange}
-						fullWidth
-					></EuiDatePicker>
-				</EuiFormRow>
-				<EuiSpacer />
-				<EuiButton
-					type='submit'
-					iconType='search'
-					isLoading={loading}
-					iconSide='right'
-					fill
-				>
-					Search
-				</EuiButton>
-			</EuiForm>
-		</EuiPanel>
+			<EuiFormRow label='From Date' fullWidth>
+				<EuiDatePicker
+					placeholder='Pick date'
+					selected={form.fromDate}
+					value={form.fromDate?.toString()}
+					onChange={handleFromDateChange}
+					fullWidth
+				></EuiDatePicker>
+			</EuiFormRow>
+			<EuiFormRow label='To Date' fullWidth>
+				<EuiDatePicker
+					placeholder='Pick date'
+					selected={form.toDate}
+					value={form.toDate?.toString()}
+					onChange={handleToDateChange}
+					fullWidth
+				></EuiDatePicker>
+			</EuiFormRow>
+			<EuiSpacer />
+			<EuiButton
+				type='submit'
+				iconType='search'
+				isLoading={loading}
+				iconSide='right'
+				fill
+			>
+				Search
+			</EuiButton>
+		</EuiForm>
 	);
 };
 

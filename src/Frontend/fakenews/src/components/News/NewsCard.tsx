@@ -56,9 +56,11 @@ const NewsCard = (props: IProps) => {
 				<EuiHorizontalRule />
 				{categoriesOfCard}
 				<EuiHorizontalRule />
-				{strippedContent.length < 100
-					? strippedContent
-					: strippedContent.substr(0, 100)}
+				<div>
+					{strippedContent.length < 75
+						? `${strippedContent}....`
+						: `${strippedContent.substr(0, 57)}....`}
+				</div>
 			</div>
 		);
 	};

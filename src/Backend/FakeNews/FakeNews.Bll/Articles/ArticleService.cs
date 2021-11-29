@@ -39,7 +39,6 @@ namespace FakeNews.Bll.Articles
             return await dbContext.Articles
                 .Include(a => a.ArticleCategories)
                 .ThenInclude(ac => ac.Category)
-                .Where(a => !a.ValidTo.HasValue || a.ValidTo <= DateTime.Now)
                 .Where(filter.CategoryId.HasValue, a => a.ArticleCategories.Any(ac => ac.CategoryId == filter.CategoryId))
                 .Where(filter.FromDate.HasValue, a => a.CreatedDate >= filter.FromDate)
                 .Where(filter.ToDate.HasValue, a => a.CreatedDate <= filter.ToDate)
@@ -75,7 +74,7 @@ namespace FakeNews.Bll.Articles
                 article.Content = article.Content;
                 article.ArticleCategories.Clear();
                 articleDto.Categories.ForEach(x => article.ArticleCategories.Add(new ArticleCategory { ArticleId = article.Id, CategoryId = x.Id }));
-                article.ShownOnHomepage = articleDto.ShownOnHomepage;
+                article.ShownOnHomepage = articleDto.ValidTo >= DateTime.Now ? articleDto.ShownOnHomepage : false;
                 article.ValidTo = articleDto.ValidTo;
 
 
@@ -90,7 +89,7 @@ namespace FakeNews.Bll.Articles
                     Content = articleDto.Content,
                     CreatedDate = DateTime.Now,
                     CreatedByUserId = (await userManager.FindByNameAsync(httpContextAccessor.HttpContext.User.Identity.Name)).Id,
-                    ShownOnHomepage = articleDto.ShownOnHomepage,
+                    ShownOnHomepage = articleDto.ValidTo >= DateTime.Now ? articleDto.ShownOnHomepage : false,
                     ValidTo = articleDto.ValidTo,
                 };
 
@@ -124,7 +123,7 @@ namespace FakeNews.Bll.Articles
         {
             return await dbContext.Articles
                 .Where(a => a.ShownOnHomepage)
-                .Where(a => !a.ValidTo.HasValue || a.ValidTo <= DateTime.Now)
+                .Where(a => !a.ValidTo.HasValue || a.ValidTo >= DateTime.Now)
                 .ProjectTo<ArticleDto>(mapper)
                 .ToListAsync();
         }

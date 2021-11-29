@@ -16,7 +16,6 @@ import { LoginPage } from './pages/Home/LoginPage';
 import { RegistrationPage } from './pages/Home/RegistrationPage';
 import RequireAuth from './pages/Auth/RequireAuth';
 import WithoutLoginOnly from './pages/Auth/WithoutLoginOnly';
-import ProfilePage from './pages/User/ProfilePage';
 import DashboardPage from './pages/Admin/DashboardPage';
 import RequireAdminRole from './pages/Auth/RequireAdminRole';
 import Forbidden from './pages/Home/Forbidden';
@@ -26,6 +25,8 @@ import NotFound from './pages/Home/NotFound';
 import UsersPage from './pages/Admin/UsersPage';
 import ArticlesPage from './pages/Admin/ArticlesPage';
 import NewsByCategoryPage from './pages/Home/NewsByCategoryPage';
+import ArticlePage from './pages/Home/ArticlePage';
+import SearchPage from './pages/Home/SearchPage';
 
 registerTheme('light', [themeLight]);
 registerTheme('dark', [themeDark]);
@@ -76,14 +77,8 @@ ReactDOM.render(
 										</WithoutLoginOnly>
 									}
 								/>
-								<Route
-									path='profile'
-									element={
-										<RequireAuth>
-											<ProfilePage />
-										</RequireAuth>
-									}
-								/>
+								<Route path='search' element={<SearchPage />} />
+								<Route path='articles/:id' element={<ArticlePage />} />
 								<Route path='category/:id' element={<NewsByCategoryPage />} />
 								{adminRoutes}
 								<Route path='*' element={<NotFound />} />

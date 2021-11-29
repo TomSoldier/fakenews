@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import HeaderUserMenu from './HeaderUserMenu';
 import { userSelectors } from '../../redux/selectors/userSelectors';
 import CategoryMenu from './CategoryMenu';
+import CollapsibleNav from './CollapsibleNav';
 import Search from './Search';
 
 export default () => {
@@ -36,20 +37,25 @@ export default () => {
 			sections={[
 				{
 					items: [
+						<EuiShowFor sizes={['xs', 's']} key='showForMobileNav'>
+							<CollapsibleNav key='colnav' />
+						</EuiShowFor>,
 						<EuiHeaderLogo
 							key='logo'
-							iconType='logoElastic'
+							iconType='notebookApp'
 							onClick={() => navigate('/')}
 						>
 							FakeNews
 						</EuiHeaderLogo>,
-						<CategoryMenu key='categoryMenu' />,
+						<EuiShowFor sizes={['m', 'l', 'xl']} key='categoryMenu'>
+							<CategoryMenu />
+						</EuiShowFor>,
 					],
 					borders: 'none',
 				},
 				{
 					items: [
-						<EuiShowFor key='items' sizes={['m', 'l', 'xl']}>
+						<EuiShowFor key='search' sizes={['m', 'l', 'xl']}>
 							<Search />
 						</EuiShowFor>,
 					],
@@ -57,9 +63,6 @@ export default () => {
 				},
 				{
 					items: [
-						<EuiShowFor key='showfor' sizes={['xs', 's']}>
-							<Search />
-						</EuiShowFor>,
 						<EuiSwitch
 							key='darkmode'
 							showLabel
@@ -67,31 +70,33 @@ export default () => {
 							checked={darkMode}
 							onChange={onChange}
 						/>,
-						isLoggedIn ? (
-							<EuiHeaderSectionItem>
-								<HeaderUserMenu />
-							</EuiHeaderSectionItem>
-						) : (
-							<EuiHeaderSectionItem>
-								<EuiHeaderLinks aria-label='App navigation links'>
-									<EuiHeaderLink
-										iconType='user'
-										onClick={() => navigate('/login')}
-									>
-										Login
-									</EuiHeaderLink>
+						<EuiShowFor key='userMenuPanel' sizes={['m', 'l', 'xl']}>
+							{isLoggedIn ? (
+								<EuiHeaderSectionItem>
+									<HeaderUserMenu />
+								</EuiHeaderSectionItem>
+							) : (
+								<EuiHeaderSectionItem>
+									<EuiHeaderLinks aria-label='App navigation links'>
+										<EuiHeaderLink
+											iconType='user'
+											onClick={() => navigate('/login')}
+										>
+											Login
+										</EuiHeaderLink>
 
-									<EuiHeaderLink
-										iconType='documentEdit'
-										onClick={() => navigate('/registration')}
-									>
-										Register
-									</EuiHeaderLink>
+										<EuiHeaderLink
+											iconType='documentEdit'
+											onClick={() => navigate('/registration')}
+										>
+											Register
+										</EuiHeaderLink>
 
-									<EuiHeaderLink iconType='help'>Help</EuiHeaderLink>
-								</EuiHeaderLinks>
-							</EuiHeaderSectionItem>
-						),
+										<EuiHeaderLink iconType='help'>Help</EuiHeaderLink>
+									</EuiHeaderLinks>
+								</EuiHeaderSectionItem>
+							)}
+						</EuiShowFor>,
 					],
 					borders: 'none',
 				},

@@ -28,6 +28,17 @@ const initialContent = (state: RootState) => state.article.initialContent;
 
 const articles = (state: RootState) => state.article.articles;
 
+const actualArticle = (state: RootState) => state.article.actualArticle;
+const actualComments = (state: RootState) =>
+	state.article.actualArticle.comments;
+
+const homePageArticles = (state: RootState) => state.article.homepageArticles;
+
+const articlesByCategoryId = (state: RootState) =>
+	state.article.articlesByCategoryId;
+
+const searchResults = (state: RootState) => state.article.searchResults;
+
 export const articleSelectors = {
 	title,
 	createdByUserId,
@@ -41,4 +52,9 @@ export const articleSelectors = {
 	fullArticle,
 	initialContent,
 	articles,
+	actualArticle,
+	actualComments,
+	homePageArticles,
+	articlesByCategoryId,
+	searchResults,
 };

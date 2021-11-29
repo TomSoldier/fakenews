@@ -3,6 +3,6 @@ export interface CommentDto {
 	content: string;
 	createdAt: Date;
 	userId: string;
-	articleId: string;
+	articleId: number;
 	byUsername: string;
 }

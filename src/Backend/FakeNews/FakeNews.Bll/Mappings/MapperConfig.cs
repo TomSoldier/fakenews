@@ -3,11 +3,7 @@ using FakeNews.Dal.Entites;
 using FakeNews.Transfer.Articles;
 using FakeNews.Transfer.Categories;
 using FakeNews.Transfer.Comment;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FakeNews.Bll.Mappings
 {

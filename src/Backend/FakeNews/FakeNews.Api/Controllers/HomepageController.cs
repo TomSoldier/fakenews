@@ -20,17 +20,17 @@ namespace FakeNews.Api.Controllers
         }
 
         [HttpGet]
-        public Task<List<ArticleDto>> GetHomePageArticles()
+        public async Task<List<ArticleDto>> GetHomePageArticles()
         {
-            return articleService.GetHomepageArticles();
+            return await articleService.GetHomepageArticles();
         }
 
         [HttpPost]
         [Route("{id}")]
         [Authorize(Roles = UserRoles.Admin)]
-        public Task SetShownOnHomepage(int id)
+        public async Task SetShownOnHomepage(int id)
         {
-            return articleService.InvertShownOnHomepage(id);
+            await articleService.InvertShownOnHomepage(id);
         }
     }
 }

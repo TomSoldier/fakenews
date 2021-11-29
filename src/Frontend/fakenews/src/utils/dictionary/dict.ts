@@ -90,4 +90,24 @@ export const Dict = {
 	containsKey<T>(dict: Dict<T>, key: string): boolean {
 		return Dict.keys(dict).includes(key);
 	},
+
+	addIfAbsent<T>(dict: Dict<T>, key: string, newValue: T): T {
+		let value = dict[key];
+		if (value == null) {
+			value = newValue;
+			// eslint-disable-next-line no-param-reassign
+			dict[key] = value;
+		}
+		return value;
+	},
 };
+
+export function groupElements<T>(
+	array: T[],
+	propertySelector: (element: T) => string
+) {
+	return array.reduce((previous: Dict<T[]>, current) => {
+		Dict.addIfAbsent(previous, propertySelector(current), []).push(current);
+		return previous;
+	}, {});
+}

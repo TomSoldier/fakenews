@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FakeNews.Dal.Migrations
 {
     [DbContext(typeof(FakeNewsDbContext))]
-    [Migration("20211127205959_Add-ColorCode")]
-    partial class AddColorCode
+    [Migration("20211128182425_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,9 @@ namespace FakeNews.Dal.Migrations
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ValidTo")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -221,14 +224,14 @@ namespace FakeNews.Dal.Migrations
                         new
                         {
                             Id = "5edaaf3b-9908-4864-8700-5d20f4a0abd0",
-                            ConcurrencyStamp = "0e7db708-19fc-45d8-a33e-f50f5fa15861",
+                            ConcurrencyStamp = "969dac47-d70e-4a97-b3bb-d19eee798f90",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "b7c62976-02e6-4bef-b03d-84f9551e82e1",
-                            ConcurrencyStamp = "7ce8fb27-5d5f-4c09-880d-04cb16cadba3",
+                            ConcurrencyStamp = "0ade724f-36a0-4673-bc5d-de892d5624df",
                             Name = "User",
                             NormalizedName = "USER"
                         });

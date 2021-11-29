@@ -1,9 +1,6 @@
 ﻿using FakeNews.Transfer.Articles;
 using FakeNews.Transfer.Comment;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FakeNews.Bll.Articles
@@ -19,5 +16,6 @@ namespace FakeNews.Bll.Articles
         Task InvertShownOnHomepage(int id);
 
         Task PostCommentToArticle(PostCommentDto dto);
+        Task<IEnumerable<CommentDto>> GetCommentsByArticleId(int articleId);
     }
 }

@@ -3,7 +3,7 @@ import { CategoryDto } from './CategoryDto';
 import { CommentDto } from './CommentDto';
 
 export interface ArticleDto {
-	id?: number;
+	id: number;
 	title: string;
 	createdByUserId: string;
 	content: string;

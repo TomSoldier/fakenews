@@ -58,7 +58,6 @@ const HeaderUserMenu = () => {
 			repositionOnScroll
 			button={button}
 			isOpen={isOpen}
-			anchorPosition='downRight'
 			closePopover={closeMenu}
 			panelPaddingSize='none'
 		>

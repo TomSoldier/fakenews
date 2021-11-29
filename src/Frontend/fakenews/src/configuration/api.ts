@@ -9,6 +9,7 @@ export const endpoints = {
 		getArticle: '/Articles',
 		postArticle: '/Articles',
 		articles: '/Articles/searchArticles',
+		deleteArticle: '/Articles',
 	},
 	Categories: {
 		categories: '/Categories',

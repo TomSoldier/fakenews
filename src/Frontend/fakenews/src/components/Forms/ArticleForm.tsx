@@ -25,7 +25,7 @@ import MultiSelect from '../Select/MultiSelect';
 
 const ArticleForm = () => {
 	const categories = useAppSelector(categorySelectors.categories);
-	const [checked, setChecked] = useState(false);
+
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
@@ -35,6 +35,8 @@ const ArticleForm = () => {
 	const validToDate = useAppSelector(articleSelectors.validTo);
 	const htmlContent = useAppSelector(articleSelectors.content);
 	const article = useAppSelector(articleSelectors.fullArticle);
+
+	const [checked, setChecked] = useState(article.shownOnHomepage);
 
 	const onTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		dispatch(articleActions.saveTitle(e.target.value));
@@ -49,8 +51,8 @@ const ArticleForm = () => {
 		dispatch(articleActions.saveValidTo(date));
 	};
 
-	const handleCategoriesChanged = (categories: CategoryDto[]) => {
-		dispatch(articleActions.saveCategories(categories));
+	const handleCategoriesChanged = (categoriesParam: CategoryDto[]) => {
+		dispatch(articleActions.saveCategories(categoriesParam));
 	};
 
 	const onHtmlContentChange = (htmlContent?: string) => {
@@ -95,7 +97,7 @@ const ArticleForm = () => {
 			<EuiFlexGroup justifyContent='center'>
 				<EuiFlexItem style={{ alignItems: 'center' }}>
 					<EuiText>
-						<h3>New Article</h3>
+						<h3>Create/Edit Article</h3>
 					</EuiText>
 				</EuiFlexItem>
 			</EuiFlexGroup>

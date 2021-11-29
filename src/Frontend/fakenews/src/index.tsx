@@ -26,6 +26,7 @@ import UsersPage from './pages/Admin/UsersPage';
 import ArticlesPage from './pages/Admin/ArticlesPage';
 import NewsByCategoryPage from './pages/Home/NewsByCategoryPage';
 import ArticlePage from './pages/Home/ArticlePage';
+import SearchPage from './pages/Home/SearchPage';
 
 registerTheme('light', [themeLight]);
 registerTheme('dark', [themeDark]);
@@ -76,6 +77,7 @@ ReactDOM.render(
 										</WithoutLoginOnly>
 									}
 								/>
+								<Route path='search' element={<SearchPage />} />
 								<Route path='articles/:id' element={<ArticlePage />} />
 								<Route path='category/:id' element={<NewsByCategoryPage />} />
 								{adminRoutes}

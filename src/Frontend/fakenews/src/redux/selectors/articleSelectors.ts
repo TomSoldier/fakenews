@@ -30,12 +30,14 @@ const articles = (state: RootState) => state.article.articles;
 
 const actualArticle = (state: RootState) => state.article.actualArticle;
 const actualComments = (state: RootState) =>
-	state.article.actualArticle?.comments;
+	state.article.actualArticle.comments;
 
 const homePageArticles = (state: RootState) => state.article.homepageArticles;
 
 const articlesByCategoryId = (state: RootState) =>
 	state.article.articlesByCategoryId;
+
+const searchResults = (state: RootState) => state.article.searchResults;
 
 export const articleSelectors = {
 	title,
@@ -54,4 +56,5 @@ export const articleSelectors = {
 	actualComments,
 	homePageArticles,
 	articlesByCategoryId,
+	searchResults,
 };

@@ -59,7 +59,7 @@ namespace FakeNews.Bll.Articles
 
         public async Task AddOrEditArticle(ArticleDto articleDto)
         {
-            var article = await dbContext.Articles.FindAsync(articleDto.Id);
+            var article = await dbContext.Articles.Include(x => x.ArticleCategories).SingleOrDefaultAsync(x => x.Id == articleDto.Id);
 
             if (article != null)
             {
@@ -69,12 +69,16 @@ namespace FakeNews.Bll.Articles
                     throw new UnauthorizedAccessException("Only the creator can edit the article");
                 }
 
+                dbContext.ArticleCategories.RemoveRange(article.ArticleCategories);
+
                 article.Title = articleDto.Title;
                 article.Content = article.Content;
                 article.ArticleCategories.Clear();
                 articleDto.Categories.ForEach(x => article.ArticleCategories.Add(new ArticleCategory { ArticleId = article.Id, CategoryId = x.Id }));
                 article.ShownOnHomepage = articleDto.ShownOnHomepage;
                 article.ValidTo = articleDto.ValidTo;
+
+
 
             }
             else
@@ -91,7 +95,6 @@ namespace FakeNews.Bll.Articles
                 };
 
                 articleDto.Categories.ForEach(x => newArticle.ArticleCategories.Add(new ArticleCategory { ArticleId = newArticle.Id, CategoryId = x.Id }));
-
                 dbContext.Articles.Add(newArticle);
             }
 
@@ -100,7 +103,7 @@ namespace FakeNews.Bll.Articles
 
         public async Task DeleteArticle(int id)
         {
-            var articleToDelete = await dbContext.Articles.Where(a => a.Id == id).SingleOrDefaultAsync();
+            var articleToDelete = await dbContext.Articles.Where(a => a.Id == id).Include(x => x.ArticleCategories).Include(x => x.Comments).SingleOrDefaultAsync();
             if (articleToDelete != null)
             {
                 var user = await userManager.FindByNameAsync(httpContextAccessor.HttpContext.User.Identity.Name);
@@ -109,7 +112,11 @@ namespace FakeNews.Bll.Articles
                     throw new UnauthorizedAccessException("Only the creator can delete the article");
                 }
             }
+
+            dbContext.ArticleCategories.RemoveRange(articleToDelete.ArticleCategories);
+            dbContext.Comments.RemoveRange(articleToDelete.Comments);
             dbContext.Articles.Remove(articleToDelete);
+
             await dbContext.SaveChangesAsync();
         }
 
@@ -117,6 +124,7 @@ namespace FakeNews.Bll.Articles
         {
             return await dbContext.Articles
                 .Where(a => a.ShownOnHomepage)
+                .Where(a => !a.ValidTo.HasValue || a.ValidTo <= DateTime.Now)
                 .ProjectTo<ArticleDto>(mapper)
                 .ToListAsync();
         }

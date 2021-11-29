@@ -51,6 +51,27 @@ export const articleActions = {
 			}
 		};
 	},
+	fetchFilterArticles: (
+		categoryId?: number,
+		fromDate?: Date,
+		toDate?: Date
+	) => {
+		return async (dispatch: AppDispatch) => {
+			try {
+				const response = await httpClient.post<ArticleDto[]>(
+					baseURL + `${endpoints.Articles.articles}`,
+					{ categoryId, fromDate, toDate }
+				);
+				dispatch(actions.saveSearchResult(response.data));
+			} catch (_) {
+				dispatch(
+					eventActions.addEvent(
+						createEvent(FakeNewsEventType.RequestFailed, 'Articles GET failed')
+					)
+				);
+			}
+		};
+	},
 	fetchArticlesInCategory: (categoryId?: string) => {
 		return async (dispatch: AppDispatch) => {
 			try {
@@ -142,6 +163,59 @@ export const articleActions = {
 				dispatch(
 					eventActions.addEvent(
 						createEvent(FakeNewsEventType.RequestFailed, 'Articles GET failed')
+					)
+				);
+			}
+		};
+	},
+	deleteArticle: (id?: number) => {
+		return async (dispatch: AppDispatch) => {
+			if (!id) {
+				return;
+			}
+			try {
+				await httpClient.delete(
+					baseURL + `${endpoints.Articles.deleteArticle}/${id}`
+				);
+				dispatch(actions.deleteArticle(id));
+			} catch (_) {
+				dispatch(
+					eventActions.addEvent(
+						createEvent(
+							FakeNewsEventType.RequestFailed,
+							'Article DELETE failed'
+						)
+					)
+				);
+			}
+		};
+	},
+	setShow: (id: number, shown: boolean) => {
+		return async (dispatch: AppDispatch) => {
+			try {
+				await httpClient.post(baseURL + `${endpoints.HomePage.homepage}/${id}`);
+				if (shown) {
+					dispatch(actions.removeFromHome(id));
+					dispatch(
+						eventActions.addEvent(
+							createEvent(FakeNewsEventType.ShowStatusChanged, 'removed from')
+						)
+					);
+				} else {
+					dispatch(actions.addToHome());
+					dispatch(
+						eventActions.addEvent(
+							createEvent(FakeNewsEventType.ShowStatusChanged, 'added to')
+						)
+					);
+				}
+			} catch (_) {
+				dispatch(
+					eventActions.addEvent(
+						createEvent(
+							FakeNewsEventType.RequestFailed,
+							'Article DELETE failed'
+						)
 					)
 				);
 			}

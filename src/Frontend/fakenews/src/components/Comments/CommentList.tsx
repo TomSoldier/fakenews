@@ -14,6 +14,7 @@ const CommentList = (props: ICommentListProps) => {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
+		dispatch(articleActions.clearComments());
 		dispatch(articleActions.fetchArticleComments(props.id));
 	}, [dispatch, props.id]);
 

@@ -52,7 +52,7 @@ const NewsByCategoryPage = () => {
 			}}
 		>
 			{(!articlesByCategoryId || articlesByCategoryId.length === 0) && empty}
-			<EuiFlexGrid columns={3}>
+			<EuiFlexGrid columns={2}>
 				{articlesByCategoryId &&
 					articlesByCategoryId.map((x) => (
 						<EuiFlexItem key={x.id}>

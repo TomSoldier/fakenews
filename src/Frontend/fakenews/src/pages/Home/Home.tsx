@@ -15,7 +15,7 @@ const Home = () => {
 
 	return (
 		<>
-			<EuiFlexGrid columns={4}>
+			<EuiFlexGrid columns={3}>
 				{homePageArticles &&
 					homePageArticles.map((x) => (
 						<EuiFlexItem key={x.id}>

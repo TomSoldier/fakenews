@@ -6,6 +6,7 @@ export enum FakeNewsEventType {
 	Logout,
 	DeleteCategorySuccess,
 	ArticleUploadSuccess,
+	ShowStatusChanged,
 }
 
 export interface FakeNewsEvent {
@@ -66,6 +67,14 @@ export function mapEventsToToasts(events: FakeNewsEvent[]): Toast[] {
 					color: 'success',
 					iconType: 'check',
 					text: `Article uploaded successfully.`,
+				};
+			case FakeNewsEventType.ShowStatusChanged:
+				return {
+					id: e.id,
+					title: 'Status changed.',
+					color: 'success',
+					iconType: 'check',
+					text: `Article is ${e.message} Home.`,
 				};
 			default:
 				return {

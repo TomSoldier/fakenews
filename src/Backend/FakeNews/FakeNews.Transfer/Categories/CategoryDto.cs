@@ -1,11 +1,4 @@
-﻿using FakeNews.Transfer.Articles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FakeNews.Transfer.Categories
+﻿namespace FakeNews.Transfer.Categories
 {
     public class CategoryDto
     {

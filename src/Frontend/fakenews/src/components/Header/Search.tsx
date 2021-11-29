@@ -10,7 +10,6 @@ const Search = () => {
 	};
 
 	const handleClick = () => {
-		console.log('clc');
 		navigate('/search', { state: { value: value } });
 	};
 
